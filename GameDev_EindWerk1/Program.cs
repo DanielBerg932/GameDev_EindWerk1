@@ -7,6 +7,7 @@ namespace GameDev_EindWerk1
         [STAThread]
         static void Main()
         {
+            //test 123
             using (var game = new Game1())
                 game.Run();
         }
