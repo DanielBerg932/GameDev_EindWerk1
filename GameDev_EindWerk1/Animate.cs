@@ -6,7 +6,7 @@ namespace GameDev_EindWerk1
 {
     public class Animate
     {
-
+        /*
         Texture2D _texture;
         private Rectangle _IndividualFrame;
 
@@ -28,6 +28,6 @@ namespace GameDev_EindWerk1
         {
             spriteBatch.Draw(_texture, new Vector2(0, 0), _IndividualFrame, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
         }
-
+        */
     }
 }

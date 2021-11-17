@@ -40,7 +40,7 @@ namespace GameDev_EindWerk1
 
         private void InitializeGameObjects()
         {
-            animation
+           // animation
         }
 
         protected override void Update(GameTime gameTime)
