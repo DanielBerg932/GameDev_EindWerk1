@@ -10,7 +10,10 @@ namespace GameDev_EindWerk1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D _texture;
+        private Texture2D _background;
         private Rectangle _individualFrame;
+        private Rectangle _mainFrame;
+      
         private int schuifOp_x = 0;
 
         public Game1()
@@ -20,26 +23,32 @@ namespace GameDev_EindWerk1
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-           
+
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             _individualFrame = new Rectangle(schuifOp_x, 0, 363, 458);
+            _mainFrame = new Rectangle(0,0,2000,1143);
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _texture = Content.Load<Texture2D>("runSheet"); //Add sprite from sheet
+
+            _texture = Content.Load<Texture2D>("runSheet");//added sprite from sheet
+            _background = Content.Load<Texture2D>("BG");//added background
+            
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-           // animation
+            // animation
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,9 +66,9 @@ namespace GameDev_EindWerk1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-
+            _spriteBatch.Draw(_background, new Vector2(0, 0), _mainFrame, Color.White);
             _spriteBatch.Draw(_texture, new Vector2(0, 0), _individualFrame, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);//used online code for scaling
-
+            
             _spriteBatch.End();
 
             schuifOp_x += 363;
