@@ -10,12 +10,13 @@ namespace GameDev_EindWerk1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D _texture;
-        private Rectangle _IndividualFrame;
+        private Rectangle _individualFrame;
+        private int schuifOp_x = 0;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-           // _graphics.ToggleFullScreen(); //open on full screen
+            //_graphics.ToggleFullScreen(); //open on full screen
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
@@ -25,7 +26,7 @@ namespace GameDev_EindWerk1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _IndividualFrame = new Rectangle(0, 0, 363, 458);
+            _individualFrame = new Rectangle(schuifOp_x, 0, 363, 458);
             base.Initialize();
         }
 
@@ -58,10 +59,16 @@ namespace GameDev_EindWerk1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            
-            _spriteBatch.Draw(_texture, new Vector2(0, 0), _IndividualFrame, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);//used online code for scaling
+
+            _spriteBatch.Draw(_texture, new Vector2(0, 0), _individualFrame, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);//used online code for scaling
 
             _spriteBatch.End();
+
+            schuifOp_x += 363;
+            if (schuifOp_x > 1089)
+                schuifOp_x = 0;
+
+            _individualFrame.X = schuifOp_x;
 
             base.Draw(gameTime);
         }
