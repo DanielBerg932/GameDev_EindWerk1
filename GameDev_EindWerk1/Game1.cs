@@ -33,9 +33,7 @@ namespace GameDev_EindWerk1
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            _texture = Content.Load<Texture2D>("runSheet");//add sprite from sheet
-
+            _texture = Content.Load<Texture2D>("runSheet"); //Add sprite from sheet
             InitializeGameObjects();
         }
 

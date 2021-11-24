@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,17 +7,11 @@ namespace GameDev_EindWerk1
 {
     public class Animate
     {
-        /*
+        Texture2D _animationTextture;
         Texture2D _texture;
-        private Rectangle _IndividualFrame;
-
-        private int imageWidth = 0;
-        private int imageHeight = 0;
-
-        public Animate(Texture2D texture)
-        {
-            animationTexture = texture;
-            deelRectangle = new Rectangle(0, 0, imageWidth, imageHeight);
+        public Animate(Texture2D texture) 
+        { 
+            
         }
 
         public void Update()
@@ -24,10 +19,11 @@ namespace GameDev_EindWerk1
 
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch sprite)
         {
-            spriteBatch.Draw(_texture, new Vector2(0, 0), _IndividualFrame, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+            sprite.Draw(_texture, new Vector2(0, 0), _individualFrame, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);//used online code for scaling
         }
-        */
+
+
     }
 }
