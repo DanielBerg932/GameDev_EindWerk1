@@ -8,14 +8,13 @@ namespace GameDev_EindWerk1
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Texture2D _texture;
+        private SpriteBatch _spriteBatch;
         private Texture2D _background;
-        private Rectangle _individualFrame;
         private Rectangle _mainFrame;
-      
-        private int schuifOp_x = 0;
 
+        private Animate hero;
+      
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -29,8 +28,7 @@ namespace GameDev_EindWerk1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _individualFrame = new Rectangle(schuifOp_x, 0, 363, 458);
-            _mainFrame = new Rectangle(0,0,2000,1143);
+            _mainFrame = new Rectangle(0, 0, 2000, 1143);
 
             base.Initialize();
         }
@@ -47,8 +45,7 @@ namespace GameDev_EindWerk1
 
         private void InitializeGameObjects()
         {
-            // animation
-
+            hero = new Animate(_texture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -56,7 +53,7 @@ namespace GameDev_EindWerk1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            hero.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -66,16 +63,13 @@ namespace GameDev_EindWerk1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+
             _spriteBatch.Draw(_background, new Vector2(0, 0), _mainFrame, Color.White);
-            _spriteBatch.Draw(_texture, new Vector2(0, 0), _individualFrame, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);//used online code for scaling
-            
+            hero.Draw(_spriteBatch);
+
             _spriteBatch.End();
 
-            schuifOp_x += 363;
-            if (schuifOp_x > 1089)
-                schuifOp_x = 0;
 
-            _individualFrame.X = schuifOp_x;
 
             base.Draw(gameTime);
         }
