@@ -8,8 +8,8 @@ namespace GameDev_EindWerk1
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Texture2D _texture;
+        private SpriteBatch _spriteBatch;
         private Texture2D _background;
         private Texture2D _jumpTexture;
         private Rectangle _individualFrame;
@@ -20,6 +20,9 @@ namespace GameDev_EindWerk1
 
         private int schuifOp_x = 0;
 
+
+        private Animate hero;
+      
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -45,14 +48,13 @@ namespace GameDev_EindWerk1
             _texture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
             _jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _background = Content.Load<Texture2D>("BG");//added background
-
+            
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-            // animation
-
+            hero = new Animate(_texture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,7 +77,7 @@ namespace GameDev_EindWerk1
                 _graphics.ApplyChanges();
             } //pressing F12 to go to fullscreen
 
-            // TODO: Add your update logic here
+            hero.Update(gameTime);
 
             base.Update(gameTime);
         }
