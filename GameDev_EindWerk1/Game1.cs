@@ -1,43 +1,40 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDev_EindWerk1.Classes;
+using GameDev_EindWerk1.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics;
 
 namespace GameDev_EindWerk1
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private Texture2D _texture;
+
         private SpriteBatch _spriteBatch;
         private Texture2D _background;
+        private Texture2D _runTexture;
         private Texture2D _jumpTexture;
-        private Rectangle _individualFrame;
-        private Rectangle _mainFrame;
+        private Hero hero;
+        private Background background;
         private int counter = 0;
-        private GameState state;
-        
-
-        private int schuifOp_x = 0;
-
-
-        private Animate hero;
+        // private GameState state;
       
+
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-
         }
 
         protected override void Initialize()
         {
-            
-            _individualFrame = new Rectangle(schuifOp_x, 0, 363, 458);
-            _mainFrame = new Rectangle(0, 0, 2000, 1143);
-
             base.Initialize();
         }
 
@@ -45,20 +42,26 @@ namespace GameDev_EindWerk1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _texture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
+            _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
             _jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _background = Content.Load<Texture2D>("BG");//added background
-            
+
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-            hero = new Animate(_texture);
+            background = new Background(_background);
+            hero = new Hero(_runTexture, new KeyboardReader());
         }
 
         protected override void Update(GameTime gameTime)
         {
+            Debug.WriteLine($"X={hero.position.X}\nY={hero.position.Y}");
+            Debug.WriteLine($"{hero.speed.Length()}");
+
+            Debug.WriteLine("");
+            #region fullscreen logic
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.F12))
@@ -76,6 +79,7 @@ namespace GameDev_EindWerk1
                 }
                 _graphics.ApplyChanges();
             } //pressing F12 to go to fullscreen
+            #endregion
 
             hero.Update(gameTime);
 
@@ -84,25 +88,17 @@ namespace GameDev_EindWerk1
 
         protected override void Draw(GameTime gameTime)
         {
-            if (state==GameState.PLAYING)
-            {
-                GraphicsDevice.Clear(Color.CornflowerBlue);
+            // if (state==GameState.PLAYING)//for when we add the menu
+            // {
+            GraphicsDevice.Clear(Color.Black);
 
-                _spriteBatch.Begin();
-                _spriteBatch.Draw(_background, new Vector2(0, 0), _mainFrame, Color.White);
-                _spriteBatch.Draw(_texture, new Vector2(0, 0), _individualFrame, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);//used online code for scaling
-                _spriteBatch.Draw(_jumpTexture, new Vector2(100, 100), _individualFrame, Color.White, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
-                _spriteBatch.End();
+            _spriteBatch.Begin();
+            background.Draw(_spriteBatch);
+            hero.Draw(_spriteBatch);
+            _spriteBatch.End();
+            base.Draw(gameTime);
+            //}
 
-                schuifOp_x += 363;
-                if (schuifOp_x > 1089)
-                    schuifOp_x = 0;
-
-                _individualFrame.X = schuifOp_x;
-
-                base.Draw(gameTime);
-            }
-           
         }
     }
 }
