@@ -11,15 +11,20 @@ namespace GameDev_EindWerk1.Classes
     public class Hero : IGameObject
     {
         Texture2D texture;
+        Texture2D flippedTexture;
+        Texture2D usedText;
         Animiation animiation;
         public Vector2 position;
         public Vector2 speed;
         public Vector2 acceleration;
-        // IInputReader inputReader;
 
-        public Hero(Texture2D _texture, IInputReader reader)
+
+
+
+        public Hero(Texture2D _texture, Texture2D _flippedTexture, IInputReader reader)
         {
             this.texture = _texture;
+            this.flippedTexture = _flippedTexture;
             animiation = new Animiation(reader);
             animiation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(363, 0, 363, 458)));
@@ -29,6 +34,7 @@ namespace GameDev_EindWerk1.Classes
             position = new Vector2(200, 200);
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
+
         }
         public void Move()
         {
@@ -61,7 +67,12 @@ namespace GameDev_EindWerk1.Classes
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+            KeyboardState state = Keyboard.GetState();//ask in class
+            if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
+                usedText = flippedTexture;
+            else
+                usedText = texture;
+            spriteBatch.Draw(usedText, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
         }
 
         public void Update(GameTime gameTime)
@@ -72,5 +83,4 @@ namespace GameDev_EindWerk1.Classes
             animiation.Update(gameTime);
         }
     }
-
 }

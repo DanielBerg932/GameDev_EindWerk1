@@ -13,14 +13,18 @@ namespace GameDev_EindWerk1
         private GraphicsDeviceManager _graphics;
 
         private SpriteBatch _spriteBatch;
-        private Texture2D _background;
+        private Texture2D _level1Background;
         private Texture2D _runTexture;
+        private Texture2D _flippedRunTexture;
         private Texture2D _jumpTexture;
+        private Texture2D _mainMenuBG;
         private Hero hero;
-        private Background background;
+        private Background playingBackground;
+        private Background menuBackground;
         private int counter = 0;
-        // private GameState state;
-      
+
+        private GameState state;
+
 
 
 
@@ -43,16 +47,21 @@ namespace GameDev_EindWerk1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
+            _mainMenuBG = Content.Load<Texture2D>("menuBG");//added running sprite from sheet
             _jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
-            _background = Content.Load<Texture2D>("BG");//added background
+            _level1Background = Content.Load<Texture2D>("BG");//added background
+            _flippedRunTexture = Content.Load<Texture2D>("runSheet_Flipped");
 
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-            background = new Background(_background);
-            hero = new Hero(_runTexture, new KeyboardReader());
+
+            state = GameState.PLAYING;
+            playingBackground = new Background(_level1Background);
+            menuBackground = new Background(_mainMenuBG);
+            hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
         }
 
         protected override void Update(GameTime gameTime)
@@ -88,16 +97,26 @@ namespace GameDev_EindWerk1
 
         protected override void Draw(GameTime gameTime)
         {
-            // if (state==GameState.PLAYING)//for when we add the menu
-            // {
-            GraphicsDevice.Clear(Color.Black);
-
             _spriteBatch.Begin();
-            background.Draw(_spriteBatch);
-            hero.Draw(_spriteBatch);
+            GraphicsDevice.Clear(Color.Black);
+            switch (state)
+            {
+                case GameState.MENU:
+                    menuBackground.Draw(_spriteBatch);
+                    break;
+                case GameState.PLAYING:
+                    playingBackground.Draw(_spriteBatch);
+                    hero.Draw(_spriteBatch);
+                    break;
+                case GameState.PAUSED:
+                    break;
+                case GameState.GAME_OVER:
+                    break;
+                default:
+                    break;
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
-            //}
 
         }
     }
