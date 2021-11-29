@@ -15,12 +15,12 @@ namespace GameDev_EindWerk1.Classes
         public Vector2 position;
         public Vector2 speed;
         public Vector2 acceleration;
-        IInputReader inputReader;
+        // IInputReader inputReader;
 
         public Hero(Texture2D _texture, IInputReader reader)
         {
             this.texture = _texture;
-            animiation = new Animiation();
+            animiation = new Animiation(reader);
             animiation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(363, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));
@@ -29,8 +29,6 @@ namespace GameDev_EindWerk1.Classes
             position = new Vector2(200, 200);
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
-            this.inputReader = reader;
-
         }
         public void Move()
         {
@@ -68,13 +66,10 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
-            var direction = inputReader.ReadInput();
-
+            var direction = animiation.UserMove();
             position += direction;
-
             Move();
             animiation.Update(gameTime);
-
         }
     }
 

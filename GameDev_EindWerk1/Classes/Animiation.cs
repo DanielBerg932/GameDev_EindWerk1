@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GameDev_EindWerk1.interfaces;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -13,31 +14,46 @@ namespace GameDev_EindWerk1.Classes
         private List<AnimationFrame> frames;
         private int counter;
         private double FrameMovement = 0;
+        IInputReader inputReader;
 
 
         public void AddFrame(AnimationFrame newFrame)
         {
             frames.Add(newFrame);
         }
+        public Vector2 UserMove()
+        {
+            var direction = inputReader.ReadInput();
+            return direction;
+        }
 
         public void Update(GameTime gameTime)
         {
-
-            CurrentFrame = frames[counter];
-            FrameMovement += CurrentFrame.SourceRect.Width * gameTime.ElapsedGameTime.TotalSeconds;
-            if (FrameMovement >= CurrentFrame.SourceRect.Width / 10)
+            if (UserMove()!=Vector2.Zero)
             {
-                counter++;
-                FrameMovement = 0;
+                CurrentFrame = frames[counter];
+                FrameMovement += CurrentFrame.SourceRect.Width * gameTime.ElapsedGameTime.TotalSeconds;
+                if (FrameMovement >= CurrentFrame.SourceRect.Width / 10)
+                {
+                    counter++;
+                    FrameMovement = 0;
+                }
+                if (counter >= frames.Count)
+                    counter = 0;
             }
-            if (counter >= frames.Count)
-                counter = 0;
+            else
+            {
+                CurrentFrame = frames[0];
+            }
+
+           
         }
 
 
-        public Animiation()
+        public Animiation(IInputReader reader)
         {
             frames = new List<AnimationFrame>();
+            inputReader = reader;
         }
     }
 }
