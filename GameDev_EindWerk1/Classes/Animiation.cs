@@ -12,7 +12,7 @@ namespace GameDev_EindWerk1.Classes
 
         public AnimationFrame CurrentFrame;
         private List<AnimationFrame> frames;
-        private int counter;
+        private int counter = 0;
         private double FrameMovement = 0;
         IInputReader inputReader;
 
@@ -20,6 +20,7 @@ namespace GameDev_EindWerk1.Classes
         public void AddFrame(AnimationFrame newFrame)
         {
             frames.Add(newFrame);
+            CurrentFrame = frames[0];
         }
         public Vector2 UserMove()
         {
