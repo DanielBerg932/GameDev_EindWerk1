@@ -71,7 +71,7 @@ namespace GameDev_EindWerk1
             menuBackground = new Background(_mainMenuBG);
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            cursor = new Cursor(_cursor);
+            /*cursor = new Cursor(_cursor);*/
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,8 +104,8 @@ namespace GameDev_EindWerk1
 
             //if (!hero.stopMoving)
             //{
-            Debug.WriteLine($"X:{mReader.ReadInput().X}\nY:{mReader.ReadInput().Y}");
-                hero.Update(gameTime);
+            //Debug.WriteLine($"X:{mReader.ReadInput().X}\nY:{mReader.ReadInput().Y}");
+            hero.Update(gameTime);
             base.Update(gameTime);
             //Debug.WriteLine("updating");
             //}
@@ -120,7 +120,7 @@ namespace GameDev_EindWerk1
             {
                 case GameState.MENU:
                     menuBackground.Draw(_spriteBatch);
-                    cursor.Draw(_spriteBatch);
+                    /*cursor.Draw(_spriteBatch);*/
                     break;
                 case GameState.PLAYING:
                     playingBackground.Draw(_spriteBatch);

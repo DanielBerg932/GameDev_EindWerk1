@@ -7,7 +7,7 @@ namespace GameDev_EindWerk1.interfaces
 {
     public interface IInputReader
     {
-         Vector2 ReadInput();
-        
+        MovePosition ReadInput();
+
     }
 }

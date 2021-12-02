@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameDev_EindWerk1.Classes
 {
-    class Cursor : IGameObject
+    class Cursor
     {
         private Texture2D _texture;
         private Animiation animiation;
@@ -16,7 +16,8 @@ namespace GameDev_EindWerk1.Classes
         private IInputReader reader;
         private Vector2 speed;
         private Vector2 acceleration;
-        public Cursor(Texture2D _texture)
+
+        /*public Cursor(Texture2D _texture)
         {
             this._texture = _texture;
             reader = new MouseReader();
@@ -28,6 +29,7 @@ namespace GameDev_EindWerk1.Classes
             animiation.AddFrame(new AnimationFrame(new Rectangle(160, 0, 32, 80)));
             position = reader.ReadInput();
         }
+
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(_texture, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
@@ -84,5 +86,7 @@ namespace GameDev_EindWerk1.Classes
             }
             return vec;
         }
+
+        */
     }
 }

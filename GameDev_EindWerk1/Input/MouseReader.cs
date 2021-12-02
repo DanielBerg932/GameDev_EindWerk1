@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameDev_EindWerk1.Input
 {
-    class MouseReader : IInputReader
+    class MouseReader
     {
         public MouseState state = Mouse.GetState();
         public Vector2 ReadInput()
