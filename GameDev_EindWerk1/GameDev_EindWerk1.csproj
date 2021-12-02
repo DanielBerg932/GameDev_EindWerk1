@@ -13,11 +13,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="NewFolder1\**" />
-    <Compile Remove="NewFolder\**" />
     <EmbeddedResource Remove="NewFolder1\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="NewFolder1\**" />
-    <None Remove="NewFolder\**" />
   </ItemGroup>
   <ItemGroup>
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
