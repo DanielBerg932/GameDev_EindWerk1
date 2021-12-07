@@ -9,19 +9,22 @@ namespace GameDev_EindWerk1.Input
 {
     class KeyboardReader : IInputReader
     {
-        public Vector2 ReadInput()
+        public int speed = 5;
+        public MovePosition ReadInput()
         {
-            var direction = Vector2.Zero;
+            MovePosition currentState = MovePosition.STOP;
+            
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down))
-                direction = new Vector2(0, 1);
-            if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up))
-                direction = new Vector2(0, -1);
-            if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
-                direction = new Vector2(-1, 0);
-            if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
-                direction = new Vector2(1, 0);
-            return direction*4;//*4 to make it move faster
+            if (state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.Space))
+                currentState = MovePosition.JUMP;
+            else if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
+                currentState = MovePosition.GO_LEFT;
+            else if (state.IsKeyDown(Keys.D) || state.IsKeyDown(Keys.Right))
+                currentState = MovePosition.GO_RIGHT;
+
+            return currentState;
         }
+
+
     }
 }

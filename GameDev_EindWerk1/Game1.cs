@@ -70,8 +70,7 @@ namespace GameDev_EindWerk1
             menuBackground = new Background(_mainMenuBG);
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            mReader = new MouseReader();
-            cursor = new Cursor(_cursor,mReader);
+            /*cursor = new Cursor(_cursor);*/
         }
 
         protected override void Update(GameTime gameTime)
@@ -124,7 +123,7 @@ namespace GameDev_EindWerk1
             {
                 case GameState.MENU:
                     menuBackground.Draw(_spriteBatch);
-                    cursor.Draw(_spriteBatch);
+                    /*cursor.Draw(_spriteBatch);*/
                     break;
                 case GameState.PLAYING:
                     playingBackground.Draw(_spriteBatch);

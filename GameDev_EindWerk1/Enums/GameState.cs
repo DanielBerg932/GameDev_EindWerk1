@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GameDev_EindWerk1
 {
-    enum GameState
+    public enum GameState
     {
         MENU,
         PLAYING,

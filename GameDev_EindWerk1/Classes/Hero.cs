@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using GameDev_EindWerk1.interfaces;
+﻿using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameDev_EindWerk1.Classes
@@ -15,11 +12,10 @@ namespace GameDev_EindWerk1.Classes
         Texture2D usedText;
         Animiation animiation;
         public Vector2 position;
-        public Vector2 speed;
-        public Vector2 acceleration;
-       public bool stopMoving;
 
-
+        private Vector2 direction = new Vector2(0, 0);
+        private int speed = 5;
+        private bool jumped = false;
 
         public Hero(Texture2D _texture, Texture2D _flippedTexture, IInputReader reader)
         {
@@ -31,48 +27,70 @@ namespace GameDev_EindWerk1.Classes
             animiation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(1089, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(1452, 0, 363, 458)));
-            position = new Vector2(200, 200);
-            speed = new Vector2(1, 1);
-            acceleration = new Vector2(0.1f, 0.1f);
-            stopMoving = false;
-            
+            position = new Vector2(200, 550);
+
         }
         public void Move()
         {
 
-            var direction = animiation.UserMove();
+            var currentPosition = animiation.UserMove();
 
-            // position += direction;
-            // position += speed;
-
-
-
-
-            speed += acceleration;
-            speed = Limit(speed, 50);
-            if (position.X <= 1780 && position.X > 0 && position.Y < 830 && position.Y > 0)//these nums are perfect
+            if (currentPosition == MovePosition.STOP)
             {
-                speed.X *= -1;
-                acceleration.X *= -1;
+                direction = new Vector2(0, 0);
                 position += direction;
+            }
+            else if (currentPosition == MovePosition.GO_RIGHT)
+            {
+                if (position.X + speed <= 1490)
+                {
+                    direction = new Vector2(speed, 0);
+                    position += direction;
+                }
+                else
+                {
+                    currentPosition = MovePosition.STOP;
+                }
+            }
+            else if (currentPosition == MovePosition.GO_LEFT)
+            {
+                if (position.X - speed >= 0)
+                {
+                    direction = new Vector2(-speed, 0);
+                    position += direction;
+                }
+                else
+                {
+                    currentPosition = MovePosition.STOP;
+                }
+            }
+            else if (currentPosition == MovePosition.JUMP && jumped == false)
+            {
+                Jump();
+            }
+
+            Gravity();
+
+
+        }
+
+        public void Jump()
+        {
+            position.Y -= 100;
+            jumped = true;
+        }
+
+        public void Gravity()
+        {
+            if (jumped == true && position.Y < 550)
+            {
+                position.Y += 15;
             }
             else
             {
-                stopMoving = true;
-                //position = ReturnToBounds(position);
-
+                jumped = false;
+                speed = 5;
             }
-
-
-
-
-            //if (position.Y < 830 && position.Y > 0)//these nums are perfect
-            //{
-            //    speed.Y *= -1;
-            //    acceleration.Y *= -1;
-            //    position += direction;
-            //}
-
         }
 
         public Vector2 Limit(Vector2 vec, float max)
@@ -88,13 +106,13 @@ namespace GameDev_EindWerk1.Classes
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+
             KeyboardState state = Keyboard.GetState();//ask in class about refactoring
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
                 usedText = flippedTexture;
             else
                 usedText = texture;
-            spriteBatch.Draw(usedText, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(usedText, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
         }
 
         public void Update(GameTime gameTime)
@@ -102,30 +120,6 @@ namespace GameDev_EindWerk1.Classes
             Move();
             animiation.Update(gameTime);
 
-        }
-
-        public Vector2 ReturnToBounds(Vector2 current)
-        {
-            int toReturn = 20;
-            if (current.X < 0)
-            {
-                return new Vector2(current.X + toReturn, current.Y);
-            }
-            if (current.Y < 0)
-            {
-                return new Vector2(current.X, current.Y + toReturn);
-            }
-            if (current.Y > 830)
-            {
-                return new Vector2(current.X, current.Y - toReturn);
-
-            }
-            if (current.X > 1780)
-            {
-                return new Vector2(current.X - toReturn, current.Y);
-            }
-
-            return Vector2.Zero;
         }
     }
 }

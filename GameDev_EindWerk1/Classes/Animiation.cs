@@ -22,19 +22,20 @@ namespace GameDev_EindWerk1.Classes
             frames.Add(newFrame);
             CurrentFrame = frames[0];
         }
-        public Vector2 UserMove()
+
+        public MovePosition UserMove()
         {
-            var direction = inputReader.ReadInput();
-            return direction;
+            MovePosition currentPosition = inputReader.ReadInput();
+            return currentPosition;
         }
 
         public void Update(GameTime gameTime)
         {
-            if (UserMove()!=Vector2.Zero)
+            if (UserMove() != MovePosition.STOP && UserMove() != MovePosition.JUMP)
             {
                 CurrentFrame = frames[counter];
                 FrameMovement += CurrentFrame.SourceRect.Width * gameTime.ElapsedGameTime.TotalSeconds;
-                if (FrameMovement >= CurrentFrame.SourceRect.Width / 10)
+                if (FrameMovement >= CurrentFrame.SourceRect.Width / 15)
                 {
                     counter++;
                     FrameMovement = 0;
@@ -44,6 +45,7 @@ namespace GameDev_EindWerk1.Classes
             }
             else
             {
+
                 CurrentFrame = frames[0];
             }
 

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameDev_EindWerk1.Classes
 {
-    class Cursor : IGameObject
+    class Cursor
     {
         private Texture2D _texture;
         private Animiation animiation;
@@ -27,6 +27,7 @@ namespace GameDev_EindWerk1.Classes
 
             position = reader.ReadInput();
         }
+
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(_texture, position, animiation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
@@ -41,6 +42,15 @@ namespace GameDev_EindWerk1.Classes
             Move();
             animiation.Update(gameTime);
         }
-
+        public Vector2 Limit(Vector2 vec, float max)
+        {
+            if (vec.Length() > max)
+            {
+                var ratio = max / vec.Length();
+                vec.X *= ratio;
+                vec.Y *= ratio;
+            }
+            return vec;
+        }
     }
 }
