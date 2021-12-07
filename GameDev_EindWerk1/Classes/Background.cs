@@ -11,16 +11,20 @@ namespace GameDev_EindWerk1.Classes
     {
         private Rectangle frame;
         private Texture2D _texture;
-        public Background(Texture2D _texture)
+        private float scale = 0;
+        public Background(Texture2D _texture, float scale = 0f)
         {
             this._texture = _texture;
             frame = new Rectangle(0, 0, 2000, 1143);
+            this.scale = scale;
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(_texture, new Vector2(0, 0), frame, Color.White);
+
+            _spriteBatch.Draw(_texture, new Vector2(0, 0), frame, Color.White/*, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f*/);
+
         }
 
-        
+
     }
 }

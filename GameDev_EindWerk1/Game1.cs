@@ -38,7 +38,6 @@ namespace GameDev_EindWerk1
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
             Window.AllowUserResizing = true;
         }
 
@@ -52,26 +51,27 @@ namespace GameDev_EindWerk1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
-            _mainMenuBG = Content.Load<Texture2D>("menuBG");//added running sprite from sheet
+            _mainMenuBG = Content.Load<Texture2D>("main-menu");//added running sprite from sheet
             //_jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _level1Background = Content.Load<Texture2D>("BG");//added background
             _flippedRunTexture = Content.Load<Texture2D>("runSheet_Flipped");
-            _cursor = Content.Load<Texture2D>("cursor_sheet");
+            _cursor = Content.Load<Texture2D>("rotated_cursor");
             _pauseMenu = Content.Load<Texture2D>("paused_background");
-            gui = new GUI();
-            mReader = new MouseReader();
+            gui = new GUI(cursor);
+            
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
 
-            state = gui.SetMenu();
+            
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            cursor = new Cursor(_cursor);
+            mReader = new MouseReader();
+            cursor = new Cursor(_cursor,mReader);
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,8 +104,12 @@ namespace GameDev_EindWerk1
 
             //if (!hero.stopMoving)
             //{
+            state = gui.SetMenu();
+            MouseState mState = Mouse.GetState();
+            Debug.WriteLine(mState.Position);
             Debug.WriteLine($"X:{mReader.ReadInput().X}\nY:{mReader.ReadInput().Y}");
                 hero.Update(gameTime);
+            cursor.Update(gameTime);
             base.Update(gameTime);
             //Debug.WriteLine("updating");
             //}
@@ -128,8 +132,10 @@ namespace GameDev_EindWerk1
                     break;
                 case GameState.PAUSED:
                     pauseBackground.Draw(_spriteBatch);
+                    cursor.Draw(_spriteBatch);
                     break;
                 case GameState.GAME_OVER:
+                    cursor.Draw(_spriteBatch);
                     break;
                 default:
                     break;
