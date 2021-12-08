@@ -71,7 +71,6 @@ namespace GameDev_EindWerk1.Classes
 
             Gravity();
 
-
         }
 
         public void Jump()
@@ -119,7 +118,6 @@ namespace GameDev_EindWerk1.Classes
         {
             Move();
             animiation.Update(gameTime);
-
         }
     }
 }

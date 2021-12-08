@@ -89,8 +89,8 @@ namespace GameDev_EindWerk1
                 counter++;
                 if (counter % 2 == 0)
                 {
-                    _graphics.PreferredBackBufferHeight = 600;
-                    _graphics.PreferredBackBufferWidth = 800;
+                    _graphics.PreferredBackBufferHeight = 1000;
+                    _graphics.PreferredBackBufferWidth = 1080;
                 }
                 else
                 {
@@ -115,6 +115,10 @@ namespace GameDev_EindWerk1
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
+
+            Vector2 coor = new Vector2(10, 20);
+            _spriteBatch.Draw(Rectangle(50, 50, 0, 0), coor, Color.White);
+
             GraphicsDevice.Clear(Color.Black);
             switch (state)
             {
