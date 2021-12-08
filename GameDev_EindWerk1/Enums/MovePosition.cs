@@ -9,6 +9,7 @@ namespace GameDev_EindWerk1
         STOP,
         GO_RIGHT,
         GO_LEFT,
-        JUMP
+        JUMP,
+        GO_DOWN
     }
 }

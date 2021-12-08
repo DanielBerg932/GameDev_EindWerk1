@@ -7,12 +7,36 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameDev_EindWerk1.Input
 {
-    class MouseReader
+    public class MouseReader : IInputReader
     {
-        public MouseState state = Mouse.GetState();
+        MouseState state;
+        public MouseReader()
+        {
+            state = Mouse.GetState();
+        }
+
+        public MovePosition ConvertInput()
+        {
+            throw new NotImplementedException();
+        }
+
         public Vector2 ReadInput()
         {
+            state = Mouse.GetState();
             return new Vector2(state.X, state.Y);
         }
+
+        public bool RightClick()
+        {
+
+            if (state.RightButton == ButtonState.Pressed)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+
+
     }
 }

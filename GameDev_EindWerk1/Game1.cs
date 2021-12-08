@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Input;
+using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,7 +28,7 @@ namespace GameDev_EindWerk1
         private int counter = 0;
         private GUI gui;
         private GameState state;
-        private MouseReader mReader;
+        private MouseReader _mReader;
         private Cursor cursor;
 
 
@@ -38,8 +39,8 @@ namespace GameDev_EindWerk1
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
             Window.AllowUserResizing = true;
+            Rectangle clientbounds = Window.ClientBounds;
         }
 
         protected override void Initialize()
@@ -52,33 +53,30 @@ namespace GameDev_EindWerk1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
-            _mainMenuBG = Content.Load<Texture2D>("menuBG");//added running sprite from sheet
+            _mainMenuBG = Content.Load<Texture2D>("main-menu");//added running sprite from sheet
             //_jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _level1Background = Content.Load<Texture2D>("BG");//added background
             _flippedRunTexture = Content.Load<Texture2D>("runSheet_Flipped");
-            _cursor = Content.Load<Texture2D>("cursor_sheet");
+            _cursor = Content.Load<Texture2D>("rotated_cursor");
             _pauseMenu = Content.Load<Texture2D>("paused_background");
-            gui = new GUI();
-            mReader = new MouseReader();
+            gui = new GUI(cursor);
+            
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-
-            state = gui.SetMenu();
+            _mReader = new MouseReader();
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            /*cursor = new Cursor(_cursor);*/
+            cursor = new Cursor(_cursor,_mReader);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            //Debug.WriteLine($"X={hero.position.X}\nY={hero.position.Y}");
-            //Debug.WriteLine($"{hero.speed.Length()}");
-            //Debug.WriteLine("");
+           
 
 
             #region fullscreen logic
@@ -102,13 +100,14 @@ namespace GameDev_EindWerk1
             #endregion
 
 
-            //if (!hero.stopMoving)
-            //{
-            //Debug.WriteLine($"X:{mReader.ReadInput().X}\nY:{mReader.ReadInput().Y}");
-            hero.Update(gameTime);
+           
+            state = gui.SetMenu();
+            MouseState mState = Mouse.GetState();
+           
+                hero.Update(gameTime);
+            cursor.Update(gameTime);
             base.Update(gameTime);
-            //Debug.WriteLine("updating");
-            //}
+            
 
         }
 
@@ -132,8 +131,10 @@ namespace GameDev_EindWerk1
                     break;
                 case GameState.PAUSED:
                     pauseBackground.Draw(_spriteBatch);
+                    cursor.Draw(_spriteBatch);
                     break;
                 case GameState.GAME_OVER:
+                    cursor.Draw(_spriteBatch);
                     break;
                 default:
                     break;

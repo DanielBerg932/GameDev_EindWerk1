@@ -23,15 +23,20 @@ namespace GameDev_EindWerk1.Classes
             CurrentFrame = frames[0];
         }
 
-        public MovePosition UserMove()
+        public Vector2 UserMove()
         {
-            MovePosition currentPosition = inputReader.ReadInput();
+            Vector2 currentPosition = inputReader.ReadInput();
             return currentPosition;
+        }
+        
+        public MovePosition EnumMoved()
+        {
+            return inputReader.ConvertInput();
         }
 
         public void Update(GameTime gameTime)
         {
-            if (UserMove() != MovePosition.STOP && UserMove() != MovePosition.JUMP)
+            if (UserMove() != Vector2.Zero)
             {
                 CurrentFrame = frames[counter];
                 FrameMovement += CurrentFrame.SourceRect.Width * gameTime.ElapsedGameTime.TotalSeconds;
@@ -45,7 +50,6 @@ namespace GameDev_EindWerk1.Classes
             }
             else
             {
-
                 CurrentFrame = frames[0];
             }
 
