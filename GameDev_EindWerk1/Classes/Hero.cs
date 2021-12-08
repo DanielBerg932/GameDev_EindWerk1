@@ -33,7 +33,7 @@ namespace GameDev_EindWerk1.Classes
         public void Move()
         {
 
-            var currentPosition = animiation.UserMove();
+            var currentPosition = animiation.EnumMoved();
 
             if (currentPosition == MovePosition.STOP)
             {

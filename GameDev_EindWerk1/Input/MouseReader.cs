@@ -14,6 +14,12 @@ namespace GameDev_EindWerk1.Input
         {
             state = Mouse.GetState();
         }
+
+        public MovePosition ConvertInput()
+        {
+            throw new NotImplementedException();
+        }
+
         public Vector2 ReadInput()
         {
             state = Mouse.GetState();
