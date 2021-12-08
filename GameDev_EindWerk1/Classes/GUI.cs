@@ -24,7 +24,7 @@ namespace GameDev_EindWerk1.Classes
                     currentState = GameState.PLAYING;
                 }
             }
-            return GameState.PAUSED;
+            return GameState.PLAYING;
         }
 
 

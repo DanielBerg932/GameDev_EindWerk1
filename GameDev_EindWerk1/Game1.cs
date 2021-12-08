@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Input;
+using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,7 +28,7 @@ namespace GameDev_EindWerk1
         private int counter = 0;
         private GUI gui;
         private GameState state;
-        private MouseReader mReader;
+        private MouseReader _mReader;
         private Cursor cursor;
 
 
@@ -39,6 +40,7 @@ namespace GameDev_EindWerk1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
+            Rectangle clientbounds = Window.ClientBounds;
         }
 
         protected override void Initialize()
@@ -64,20 +66,17 @@ namespace GameDev_EindWerk1
 
         private void InitializeGameObjects()
         {
-
-            
+            _mReader = new MouseReader();
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            /*cursor = new Cursor(_cursor);*/
+            cursor = new Cursor(_cursor,_mReader);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            //Debug.WriteLine($"X={hero.position.X}\nY={hero.position.Y}");
-            //Debug.WriteLine($"{hero.speed.Length()}");
-            //Debug.WriteLine("");
+           
 
 
             #region fullscreen logic
@@ -101,17 +100,14 @@ namespace GameDev_EindWerk1
             #endregion
 
 
-            //if (!hero.stopMoving)
-            //{
+           
             state = gui.SetMenu();
             MouseState mState = Mouse.GetState();
-            Debug.WriteLine(mState.Position);
-            Debug.WriteLine($"X:{mReader.ReadInput().X}\nY:{mReader.ReadInput().Y}");
+           
                 hero.Update(gameTime);
             cursor.Update(gameTime);
             base.Update(gameTime);
-            //Debug.WriteLine("updating");
-            //}
+            
 
         }
 
