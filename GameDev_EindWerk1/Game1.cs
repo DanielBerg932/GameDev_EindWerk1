@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace GameDev_EindWerk1
 {
@@ -42,8 +43,7 @@ namespace GameDev_EindWerk1
         private Cursor cursor;
         public Rectangle clientbounds;
 
-
-
+        public Rectangles rectList = new Rectangles();
 
         public Game1()
         {
@@ -111,8 +111,8 @@ namespace GameDev_EindWerk1
                 counter++;
                 if (counter % 2 == 0)
                 {
-                    _graphics.PreferredBackBufferHeight = 600;
-                    _graphics.PreferredBackBufferWidth = 800;
+                    _graphics.PreferredBackBufferHeight = 1000;
+                    _graphics.PreferredBackBufferWidth = 1080;
                 }
                 else
                 {
@@ -168,6 +168,23 @@ namespace GameDev_EindWerk1
                 default:
                     break;
             }
+
+            Texture2D whiteRectangle;
+            whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            whiteRectangle.SetData(new[] { Color.White });
+            
+            _spriteBatch.Draw(whiteRectangle, new Rectangle(500, 800 - 100, 50, 100), Color.White);
+
+            /*Texture2D redRectangle;
+            redRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            redRectangle.SetData(new[] { Color.White });
+            _spriteBatch.Draw(redRectangle, , Color.Red);*/
+
+
+
+
+
+
             _spriteBatch.End();
             base.Draw(gameTime);
 
