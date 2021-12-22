@@ -26,10 +26,10 @@ namespace GameDev_EindWerk1.Input
             return new Vector2(state.X, state.Y);
         }
 
-        public bool RightClick()
+        public bool LeftClick()
         {
 
-            if (state.RightButton == ButtonState.Pressed)
+            if (state.LeftButton == ButtonState.Pressed)
             {
                 return true;
             }

@@ -10,6 +10,7 @@ namespace GameDev_EindWerk1.Input
     class KeyboardReader : IInputReader
     {
         //public int speed = 5;
+        
         public Vector2 ReadInput()
         {
 

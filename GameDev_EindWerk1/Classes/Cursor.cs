@@ -11,7 +11,7 @@ namespace GameDev_EindWerk1.Classes
     class Cursor
     {
         private Texture2D _texture;
-        private Animiation animiation;
+        public Animiation animiation;
         public Vector2 position;
         private Vector2 speed;
         private Vector2 acceleration;
@@ -24,7 +24,6 @@ namespace GameDev_EindWerk1.Classes
             this._texture = _texture;
             animiation = new Animiation(reader);
             animiation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 84, 161)));
-
             position = reader.ReadInput();
         }
 

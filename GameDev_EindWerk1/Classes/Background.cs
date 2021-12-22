@@ -21,7 +21,7 @@ namespace GameDev_EindWerk1.Classes
         public void Draw(SpriteBatch _spriteBatch)
         {
 
-            _spriteBatch.Draw(_texture, new Vector2(0, 0), frame, Color.White/*, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f*/);
+            _spriteBatch.Draw(_texture, new Vector2(0, 0), frame, Color.White);
 
         }
 

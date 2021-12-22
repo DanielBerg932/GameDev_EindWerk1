@@ -1,4 +1,5 @@
 ﻿using GameDev_EindWerk1.interfaces;
+using GameDev_EindWerk1;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +13,7 @@ namespace GameDev_EindWerk1.Classes
         Texture2D usedText;
         Animiation animiation;
         public Vector2 position;
+        
 
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
@@ -27,18 +29,48 @@ namespace GameDev_EindWerk1.Classes
             animiation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(1089, 0, 363, 458)));
             animiation.AddFrame(new AnimationFrame(new Rectangle(1452, 0, 363, 458)));
-            position = new Vector2(200, 550);
-
+            position = new Vector2(200, 550); 
+            
         }
         public void Move()
         {
-
             var currentPosition = animiation.EnumMoved();
-
             if (currentPosition == MovePosition.STOP)
             {
                 direction = new Vector2(0, 0);
                 position += direction;
+            }
+            else if (currentPosition == MovePosition.JUMP_RIGHT)
+            {
+                if (position.X - speed >= 0)
+                {
+                    if (jumped == false)
+                    {
+                        Jump();
+                    }
+                    direction = new Vector2(speed, 0);
+                    position += direction;
+                }
+                else
+                {
+                    currentPosition = MovePosition.STOP;
+                }
+            }
+            else if (currentPosition == MovePosition.JUMP_LEFT)
+            {
+                if (position.X - speed >= 0)
+                {
+                    if (jumped == false)
+                    {
+                        Jump();
+                    }
+                    direction = new Vector2(-speed, 0);
+                    position += direction;
+                }
+                else
+                {
+                    currentPosition = MovePosition.STOP;
+                }
             }
             else if (currentPosition == MovePosition.GO_RIGHT)
             {
@@ -68,10 +100,7 @@ namespace GameDev_EindWerk1.Classes
             {
                 Jump();
             }
-
             Gravity();
-
-
         }
 
         public void Jump()
@@ -106,8 +135,7 @@ namespace GameDev_EindWerk1.Classes
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
-            KeyboardState state = Keyboard.GetState();//ask in class about refactoring
+            KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
                 usedText = flippedTexture;
             else
@@ -118,8 +146,7 @@ namespace GameDev_EindWerk1.Classes
         public void Update(GameTime gameTime)
         {
             Move();
-            animiation.Update(gameTime);
-
+            animiation.Update(gameTime);        
         }
     }
 }

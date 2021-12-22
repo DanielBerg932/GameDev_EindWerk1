@@ -9,6 +9,7 @@ namespace GameDev_EindWerk1
         MENU,
         PLAYING,
         PAUSED,
-        GAME_OVER
+        GAME_OVER,
+        QUIT
     }
 }
