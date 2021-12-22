@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace GameDev_EindWerk1
 {
@@ -31,9 +32,7 @@ namespace GameDev_EindWerk1
         private MouseReader _mReader;
         private Cursor cursor;
 
-
-
-
+        public Rectangles rectList = new Rectangles();
 
         public Game1()
         {
@@ -41,6 +40,7 @@ namespace GameDev_EindWerk1
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
             Rectangle clientbounds = Window.ClientBounds;
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -72,6 +72,7 @@ namespace GameDev_EindWerk1
             pauseBackground = new Background(_pauseMenu);
             hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
             cursor = new Cursor(_cursor,_mReader);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,7 +105,7 @@ namespace GameDev_EindWerk1
             state = gui.SetMenu();
             MouseState mState = Mouse.GetState();
            
-                hero.Update(gameTime);
+            hero.Update(gameTime);
             cursor.Update(gameTime);
             base.Update(gameTime);
             
@@ -116,7 +117,7 @@ namespace GameDev_EindWerk1
             _spriteBatch.Begin();
 
             Vector2 coor = new Vector2(10, 20);
-            _spriteBatch.Draw(Rectangle(50, 50, 0, 0), coor, Color.White);
+            //_spriteBatch.Draw(, coor, Color.White);
 
             GraphicsDevice.Clear(Color.Black);
             switch (state)
@@ -139,6 +140,23 @@ namespace GameDev_EindWerk1
                 default:
                     break;
             }
+
+            Texture2D whiteRectangle;
+            whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            whiteRectangle.SetData(new[] { Color.White });
+            
+            _spriteBatch.Draw(whiteRectangle, new Rectangle(500, 800 - 100, 50, 100), Color.White);
+
+            /*Texture2D redRectangle;
+            redRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            redRectangle.SetData(new[] { Color.White });
+            _spriteBatch.Draw(redRectangle, , Color.Red);*/
+
+
+
+
+
+
             _spriteBatch.End();
             base.Draw(gameTime);
 
