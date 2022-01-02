@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using GameDev_EindWerk1.interfaces;
+using GameDev_EindWerk1.Input;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -11,11 +13,19 @@ namespace GameDev_EindWerk1.Classes
     {
 
         public AnimationFrame CurrentFrame;
-        private List<AnimationFrame> frames;
+        public List<AnimationFrame> frames;
+        public Vector2 userMove = Vector2.Zero;
         private int counter = 0;
         private double FrameMovement = 0;
         IInputReader inputReader;
+        public int frameCounter;
 
+        public Animiation(IInputReader reader ,int _frameCounter)
+        {
+            frames = new List<AnimationFrame>();
+            inputReader = reader;
+            frameCounter = _frameCounter;
+        }
 
         public void AddFrame(AnimationFrame newFrame)
         {
@@ -36,7 +46,8 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
-            if (UserMove() != Vector2.Zero)
+            
+            if (userMove != Vector2.Zero&& userMove != new Vector2(99999, 999999))//only when keyboard is pressed then it animates, can be overitten by non-interactable classes
             {
                 CurrentFrame = frames[counter];
                 FrameMovement += CurrentFrame.SourceRect.Width * gameTime.ElapsedGameTime.TotalSeconds;
@@ -50,17 +61,13 @@ namespace GameDev_EindWerk1.Classes
             }
             else
             {
-                CurrentFrame = frames[0];
+                CurrentFrame = frames[frameCounter-1];
             }
 
            
         }
 
 
-        public Animiation(IInputReader reader)
-        {
-            frames = new List<AnimationFrame>();
-            inputReader = reader;
-        }
+       
     }
 }

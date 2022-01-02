@@ -10,12 +10,11 @@ namespace GameDev_EindWerk1.Classes
 {
     public class Hero : IGameObject
     {
+        #region props
         Texture2D texture;
-        Texture2D flippedTexture;
-        Texture2D usedText;
-        Animiation animation;
+        private SpriteFont font;
+        public Animiation animation;
         public Vector2 position;
-        
 
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
@@ -26,9 +25,24 @@ namespace GameDev_EindWerk1.Classes
         private bool jump = false;
 
         private double inercia = 15;
+        private int hP;
 
+        public int HP
+        {
+            get => hP; set
+            {
+                if (value! > 0)
+                {
+                    hP = value;
+                }
+                else
+                {
+                    hP = 0;
+                }
+            }
+        }
 
-
+        #endregion
         public Rectangle Rectangle
         {
             get
@@ -37,22 +51,26 @@ namespace GameDev_EindWerk1.Classes
             }
         }
 
-        public Hero(Texture2D _texture, Texture2D _flippedTexture, IInputReader reader)
+        public Vector2 Position { get => position; set => position = value; }
+
+        public Hero(Texture2D _texture, IInputReader reader, SpriteFont _font)
         {
             this.texture = _texture;
-            this.flippedTexture = _flippedTexture;
-            animation = new Animiation(reader);
+            font = _font;
+            animation = new Animiation(reader, 3);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(363, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1089, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1452, 0, 363, 458)));
-            position = new Vector2(200, floor - animation.CurrentFrame.SourceRect.Height * 0.3f);
-
+            position = new Vector2(200, (float)Math.Round(floor - animation.CurrentFrame.SourceRect.Height * 0.3f, MidpointRounding.ToPositiveInfinity));
+            HP = 1000;
         }
         public void Move()
         {
-            var currentPosition = animiation.EnumMoved();
+
+            animation.userMove = animation.UserMove();//start animation
+            var currentPosition = animation.EnumMoved();
             if (currentPosition == MovePosition.STOP)
             {
                 direction = new Vector2(0, 0);
@@ -130,32 +148,52 @@ namespace GameDev_EindWerk1.Classes
                 inercia -= 0.8;
                 position.Y -= (float)inercia;
             }
-            else {
+            else
+            {
                 inercia = 15;
 
                 jump = false;
                 pressed = false;
             }
 
-            Debug.WriteLine(this.Rectangle);
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
-                usedText = flippedTexture;
-            else
-                usedText = texture;
-            spriteBatch.Draw(usedText, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+            if (HP == 0)
+            {
 
+            }
+            else
+            {
+
+                KeyboardState state = Keyboard.GetState();
+                if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
+                {
+                    spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
+                }
+                else
+                {
+                    spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                }
+                spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow);//bring to class
+
+
+            }
+        }
+
+        public override string ToString()
+        {
+            return $" health:  {HP}";
         }
 
         public void Update(GameTime gameTime)
         {
             Move();
+            //Debug.WriteLine(animation.frames.Count);
             animation.Update(gameTime);
         }
+
+        
     }
 }

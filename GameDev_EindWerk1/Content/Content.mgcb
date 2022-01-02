@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:buttons/backBttn.png
 
+#begin buttons/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:buttons/File.spritefont;buttons/osaka.spritefont
+
 #begin buttons/level1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -169,6 +176,18 @@
 /processorParam:TextureFormat=Color
 /build:jumpSheet.png
 
+#begin kunaiSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:kunaiSheet.png
+
 #begin main-menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -228,16 +247,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:runSheet.png
-
-#begin runSheet_Flipped.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:runSheet_Flipped.png
 

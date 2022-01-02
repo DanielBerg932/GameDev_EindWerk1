@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Input;
+using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.buttons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,11 +15,10 @@ namespace GameDev_EindWerk1
     {
         private GraphicsDeviceManager _graphics;
         private Texture2D _enemy1Runsheet;
+        private Texture2D _enemy1DeadSheet;
         private SpriteBatch _spriteBatch;
         private Texture2D _level1Background;
         private Texture2D _runTexture;
-        private Texture2D _flippedRunTexture;
-        //private Texture2D _jumpTexture;
         private Texture2D _playButton;
         private Texture2D _resumeButton;
         private Texture2D _quitButton;
@@ -27,6 +27,7 @@ namespace GameDev_EindWerk1
         private Texture2D _level1Bttn;
         private Texture2D _level2Bttn;
         private Texture2D _cursor;
+        private Texture2D _kunai;
         private Hero hero;
         private RobotEnemy robot;
         private Button playBttn;
@@ -39,12 +40,13 @@ namespace GameDev_EindWerk1
         private Background menuBackground;
         private int counter = 0;
         private GUI gui;
+        private Kunai kunai;
         private GameState state;
         private Cursor cursor;
         public Rectangle clientbounds;
-
-        public Rectangles rectList = new Rectangles();
-
+        public SpriteFont font;
+        public Damage damage;
+  
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -61,6 +63,7 @@ namespace GameDev_EindWerk1
         protected override void LoadContent()
         {
             _enemy1Runsheet = Content.Load<Texture2D>(@"enemySprites\robot\runsheet");
+            //_enemy1DeadSheet = Content.Load<Texture2D>(@"enemySprites\robot\deadSheet");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _playButton = Content.Load<Texture2D>(@"buttons\play_button");
             _resumeButton = Content.Load<Texture2D>(@"buttons\resume");
@@ -70,11 +73,11 @@ namespace GameDev_EindWerk1
             _mainMenuBG = Content.Load<Texture2D>(@"buttons\plain_bg");
             //_jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _level1Background = Content.Load<Texture2D>("BG");//added background
-            _flippedRunTexture = Content.Load<Texture2D>("runSheet_Flipped");
             _cursor = Content.Load<Texture2D>("rotated_cursor");
             _level1Bttn = Content.Load<Texture2D>(@"buttons\level1");
             _level2Bttn = Content.Load<Texture2D>(@"buttons\level2");
-
+            font = Content.Load<SpriteFont>(@"buttons\osaka");
+            _kunai = Content.Load<Texture2D>("kunaiSheet");
             InitializeGameObjects();
 
         }
@@ -91,10 +94,12 @@ namespace GameDev_EindWerk1
             resumeBttn = new Button(_resumeButton, 374, 55, 500, 755);
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
-            hero = new Hero(_runTexture, _flippedRunTexture, new KeyboardReader());
-            robot = new RobotEnemy(_enemy1Runsheet,new KeyboardReader());
+            hero = new Hero(_runTexture, new KeyboardReader(), font);
+            robot = new RobotEnemy(_enemy1Runsheet/*,_enemy1DeadSheet*/, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
-            gui = new GUI(cursor, playBttn, quitBttn,backBtnn,resumeBttn,level1Bttn,level2Bttn);
+            gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
+            kunai = new Kunai(_kunai, new KeyboardReader(), hero, font);
+            damage = new Damage(hero, robot, kunai);
 
         }
 
@@ -123,12 +128,34 @@ namespace GameDev_EindWerk1
             } //pressing F12 to go to fullscreen
             #endregion
 
+            switch (state)
+            {
+                case GameState.MENU:
+                    break;
+                case GameState.PLAYING:
+                    //hero.checkfordamage(robot);
+                    damage.Update();
+                    hero.Update(gameTime);
+                    kunai.EnemyHit = damage.EnemyHit;//sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
+                    robot.Update(gameTime);
+                    kunai.Update(gameTime);
+                    break;
+                case GameState.PAUSED:
+                    break;
+                case GameState.GAME_OVER:
+                    break;
+                case GameState.QUIT:
+                    break;
+                default:
+                    break;
+            }
 
 
 
+            //debug.writeline($"hero {hero.position}\troboy {robot.position}");
 
-            hero.Update(gameTime);
             cursor.Update(gameTime);
+
             base.Update(gameTime);
 
 
@@ -150,8 +177,10 @@ namespace GameDev_EindWerk1
                     break;
                 case GameState.PLAYING:
                     playingBackground.Draw(_spriteBatch);
-                    hero.Draw(_spriteBatch);
                     robot.Draw(_spriteBatch);
+                    hero.Draw(_spriteBatch);
+                    cursor.Draw(_spriteBatch);
+                    kunai.Draw(_spriteBatch);
                     break;
                 case GameState.QUIT:
                     Exit();
@@ -169,18 +198,6 @@ namespace GameDev_EindWerk1
                     break;
             }
 
-            Texture2D whiteRectangle;
-            whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            whiteRectangle.SetData(new[] { Color.White });
-            
-            _spriteBatch.Draw(whiteRectangle, new Rectangle(500, 800 - 100, 50, 100), Color.White);
-
-            /*Texture2D redRectangle;
-            redRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            redRectangle.SetData(new[] { Color.White });
-            _spriteBatch.Draw(redRectangle, , Color.Red);*/
-
-
 
 
 
@@ -189,5 +206,7 @@ namespace GameDev_EindWerk1
             base.Draw(gameTime);
 
         }
+
+
     }
 }

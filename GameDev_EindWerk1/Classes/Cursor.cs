@@ -13,16 +13,15 @@ namespace GameDev_EindWerk1.Classes
         private Texture2D _texture;
         public Animiation animiation;
         public Vector2 position;
-        private Vector2 speed;
-        private Vector2 acceleration;
-        private Vector2 moussePosition;
-
         public MouseReader mouse = new MouseReader();
+
+
+
 
         public Cursor(Texture2D _texture, IInputReader reader)
         {
             this._texture = _texture;
-            animiation = new Animiation(reader);
+            animiation = new Animiation(reader,1);
             animiation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 84, 161)));
             position = reader.ReadInput();
         }
@@ -41,15 +40,6 @@ namespace GameDev_EindWerk1.Classes
             Move();
             animiation.Update(gameTime);
         }
-        public Vector2 Limit(Vector2 vec, float max)
-        {
-            if (vec.Length() > max)
-            {
-                var ratio = max / vec.Length();
-                vec.X *= ratio;
-                vec.Y *= ratio;
-            }
-            return vec;
-        }
+        
     }
 }
