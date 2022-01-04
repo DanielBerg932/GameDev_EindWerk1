@@ -11,15 +11,12 @@ namespace GameDev_EindWerk1.buttons
     {
         public Rectangle rect;
         private Texture2D _texture;
-        private float scale = 0;
-        int counter = 0;
         public int height;
-        
+
         public Vector2 position;
-             
-        public Button(Texture2D _texture, int width, int height,  int y, int x)
+
+        public Button(Texture2D _texture, int width, int height, int y, int x)
         {
-            counter++;
             this._texture = _texture;
             rect = new Rectangle(0, 0, width, height);
             this.height = height;
