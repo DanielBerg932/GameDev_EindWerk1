@@ -25,7 +25,7 @@ namespace GameDev_EindWerk1.Classes
         public void HeroDamage(Hero hero, RobotEnemy robot)
         {
            
-            bool hit = hero.Position.X >= robot.Position.X - 100 && hero.Position.X <= robot.Position.X + 100;
+            bool hit = hero.position.X >= robot.Position.X - 100 && hero.position.X <= robot.Position.X + 100;
 
             if (hit)
             {
