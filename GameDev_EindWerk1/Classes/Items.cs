@@ -10,7 +10,9 @@ namespace GameDev_EindWerk1.Classes
     {
         private static Items _obstacles = new Items();
 
-        public List<ItemInfo> obstacleList = new List<ItemInfo>();
+        public List<ItemInfo> level1 = new List<ItemInfo>();
+        public List<ItemInfo> level2 = new List<ItemInfo>();
+
         private Items() { }
         public static Items GetInstance()
         {

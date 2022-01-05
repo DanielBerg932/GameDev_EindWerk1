@@ -46,7 +46,6 @@ namespace GameDev_EindWerk1
         public Rectangle clientbounds;
         public SpriteFont font;
         public Damage damage;
-  
 
         private Texture2D _tile0;
         private Texture2D _tile1;
@@ -67,8 +66,6 @@ namespace GameDev_EindWerk1
         private Texture2D _tile16;
         private Texture2D _tile17;
         private Texture2D _tile18;
-
-        Items obs = Items.GetInstance();
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -148,7 +145,7 @@ namespace GameDev_EindWerk1
             damage = new Damage(hero, robot, kunai);
 
             LevelDesigner levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
-
+            levelDesigner.loadLevel(1);
         }
 
         protected override void Update(GameTime gameTime)
