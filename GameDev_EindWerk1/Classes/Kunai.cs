@@ -63,7 +63,7 @@ namespace GameDev_EindWerk1.Classes
             {
                 if (rCounter <= 1)
                 {
-                    position = hero.Position;
+                    position = hero.position;
                 }
                 position.X += 10;
                 rCounter++;
@@ -73,7 +73,7 @@ namespace GameDev_EindWerk1.Classes
             {
                 if (lCounter <= 1)
                 {
-                    position = hero.Position;
+                    position = hero.position;
                 }
                 position.X -= 10;
                 lCounter++;

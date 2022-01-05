@@ -11,19 +11,22 @@ namespace GameDev_EindWerk1.Classes
 {
     public class Hero : IGameObject
     {
-        #region props
+
         Texture2D texture;
         private SpriteFont font;
         public Animiation animation;
         public Vector2 position;
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
+        private int floor = 820;
 
-        private int floor = 800;
+        MovePosition currentPosition = MovePosition.STOP;
 
-        private bool pressed = false;
+        private bool fall = false;
+        private double fallSpeed = 10;
+
         private bool jump = false;
-
+        private bool pressed = false;
         private double inercia = 15;
         private int hP;
 
@@ -42,18 +45,14 @@ namespace GameDev_EindWerk1.Classes
             }
         }
 
-        #endregion
-        public Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle((int)position.X, (int)position.Y, Convert.ToInt32(texture.Width * 0.28), Convert.ToInt32(texture.Height * 0.28));
-            }
-        }
+        Items obs = Items.GetInstance();
 
-        public Vector2 Position { get => position; set => position = value; }
+        public Vector2 position = new Vector2(200, 400);
+        private Rectangle rectPosition = new Rectangle(15, 8, 85, 126);
 
-        public Hero(Texture2D _texture, IInputReader reader, Texture2D _kunaiTexture, SpriteFont _font)
+        //public Vector2 Position { get => position; set => position = value; }
+
+        public Hero(Texture2D _texture, IInputReader reader, SpriteFont _font)
         {
             this.texture = _texture;
             font = _font;
@@ -63,97 +62,119 @@ namespace GameDev_EindWerk1.Classes
             animation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1089, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1452, 0, 363, 458)));
-            position = new Vector2(200, (float)Math.Round(floor - animation.CurrentFrame.SourceRect.Height * 0.3f, MidpointRounding.ToPositiveInfinity));
             HP = 1000;
+            //position = new Vector2(200, floor - animation.CurrentFrame.SourceRect.Height * 0.3f);
+            //position = new Vector2(200, 400);
+
+
         }
         public void Move()
         {
 
-            animation.userMove = animation.UserMove();//start animation
-            var currentPosition = animation.EnumMoved();
+            animation.userMove = animation.UserMove(); //start animation
+            currentPosition = animation.EnumMoved();
+
             if (currentPosition == MovePosition.STOP)
             {
-                direction = new Vector2(0, 0);
-                position += direction;
+                //MoveTo(0, 8);
             }
             else if (currentPosition == MovePosition.JUMP_RIGHT)
             {
-                if (position.X - speed >= 0)
-                {
-                    if (pressed == false)
-                    {
-                        pressed = true;
-                        jump = true;
-                    }
-                    direction = new Vector2(speed, 0);
-                    position += direction;
-                }
-                else
-                {
-                    currentPosition = MovePosition.STOP;
-                }
+                jump = true;
+                MoveTo(speed, 0);
             }
             else if (currentPosition == MovePosition.JUMP_LEFT)
             {
-                if (position.X - speed >= 0)
-                {
-                    if (pressed == false)
-                    {
-                        pressed = true;
-                        jump = true;
-                    }
-                    direction = new Vector2(-speed, 0);
-                    position += direction;
-                }
-                else
-                {
-                    currentPosition = MovePosition.STOP;
-                }
+                jump = true;
+                MoveTo(-speed, 0);
             }
             else if (currentPosition == MovePosition.GO_RIGHT)
             {
-                if (position.X + speed <= 1490)
-                {
-                    direction = new Vector2(speed, 0);
-                    position += direction;
-                }
-                else
-                {
-                    currentPosition = MovePosition.STOP;
-                }
+                MoveTo(speed, 0);
             }
             else if (currentPosition == MovePosition.GO_LEFT)
             {
-                if (position.X - speed >= 0)
-                {
-                    direction = new Vector2(-speed, 0);
-                    position += direction;
-                }
-                else
-                {
-                    currentPosition = MovePosition.STOP;
-                }
+                MoveTo(-speed, 0);
+
             }
-            else if (currentPosition == MovePosition.JUMP && pressed == false)
+            else if (currentPosition == MovePosition.JUMP && !pressed)
             {
-                pressed = true;
                 jump = true;
+                pressed = true;
             }
-
-
+            else 
+            {
+                currentPosition = MovePosition.STOP;
+            }
 
             //fall back on the floor after jump
-            if (jump && (position.Y + animation.CurrentFrame.SourceRect.Height * 0.28) - inercia <= floor)
+            if (jump)
             {
                 inercia -= 0.8;
-                position.Y -= (float)inercia;
+                MoveTo(0, -(int)inercia);
+            }
+            else 
+            {
+                inercia = 22;
+                pressed = false;
+            }
+
+            if (fall && !jump)
+            {
+                fallSpeed -= 0.8;
+                MoveTo(0, 10);
+            }
+            
+        }
+
+        public void MoveTo(int xMovement, int yMovement)
+        {
+
+            foreach (var item in obs.obstacleList) {
+                //if ((rectPosition.Right + position.X + xMovement >= item.Rect.Left) &&
+                //    (rectPosition.Bottom + position.Y + yMovement >= item.Rect.Top) &&
+                //    (rectPosition.Top + position.Y + yMovement <= item.Rect.Bottom) &&
+                //    (rectPosition.Left + position.X + xMovement <= item.Rect.Right))
+                //{
+
+                //    xMovement = 0;
+                //    yMovement = 0;
+                //    jump = false;
+                //}
+
+                if ((rectPosition.Bottom + position.Y + yMovement >= item.Rectangle.Top) && (rectPosition.Right + position.X + xMovement >= item.Rectangle.Left) && (rectPosition.Left + position.X + xMovement <= item.Rectangle.Right) && (rectPosition.Top + position.Y + yMovement <= item.Rectangle.Bottom)) //TOP
+                {
+                    xMovement = 0;
+                    yMovement = 0;
+                    jump = false;
+                    fall = true;
+                }
+            }
+
+            if (rectPosition.Left + position.X + xMovement <= 0)
+            {
+                xMovement = 0;
+                yMovement = 0;
+
+            }
+            else if (rectPosition.Right + position.X + xMovement >= 1580)
+            {
+                xMovement = 0;
+                yMovement = 0;
+            }
+            else if (rectPosition.Bottom + position.Y + yMovement >= floor)
+            {
+                xMovement = 0;
+                yMovement = 0;
+                jump = false;
             }
             else
             {
-                inercia = 15;
+                position.X += xMovement;
+                position.Y += yMovement;
 
-                jump = false;
-                pressed = false;
+                /*rectPosition.X += xMovement;*/
+                /*rectPosition.Y += yMovement;*/
             }
 
         }
@@ -171,11 +192,11 @@ namespace GameDev_EindWerk1.Classes
                 KeyboardState state = Keyboard.GetState();
                 if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
                 {
-                    spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(texture, new Vector2(position.X + rectPosition.X, position.Y + rectPosition.Y), animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
                 }
                 else
                 {
-                    spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, new Vector2(position.X + rectPosition.X, position.Y + rectPosition.Y), animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
                 }
                 spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow);//bring to class
 
@@ -191,12 +212,8 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
-          
             Move();
-            //Debug.WriteLine(animation.frames.Count);
             animation.Update(gameTime);
         }
-
-
     }
 }

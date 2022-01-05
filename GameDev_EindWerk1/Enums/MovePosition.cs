@@ -13,6 +13,7 @@ namespace GameDev_EindWerk1
         GO_DOWN,
         JUMP_RIGHT,
         JUMP_LEFT,
+        FALLING,
         SHOOT
     }
 }
