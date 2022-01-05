@@ -32,6 +32,7 @@ namespace GameDev_EindWerk1
         private Texture2D _cursor;
         private Texture2D _kunai;
         private Hero hero;
+        private Hero hero2;
         private RobotEnemy robot;
         private Button playBttn;
         private Button quitBttn;
@@ -43,14 +44,14 @@ namespace GameDev_EindWerk1
         private Background menuBackground;
         private int counter = 0;
         private GUI gui;
-        private Kunai k1;
+        private Kunai kunai;
         private Kunai k2;
-        private Kunai k3;
         private GameState state;
         private Cursor cursor;
         public Rectangle clientbounds;
         public SpriteFont font;
         public Damage damage;
+        private Damage damage2;
         public ZombieEnemy zombie;
         public LevelDesigner levelDesigner;
 
@@ -148,18 +149,20 @@ namespace GameDev_EindWerk1
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
             hero = new Hero(_runTexture, new KeyboardReader(), font);
+            hero2 = new Hero(_runTexture, new KeyboardReader(), font);
             robot = new RobotEnemy(_enemy1Runsheet, _enemy1DeadSheet, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
-            k1 = new Kunai(_kunai, new KeyboardReader(), hero);
+            kunai = new Kunai(_kunai, new KeyboardReader(), hero);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
-            k1 = new Kunai(_kunai, new KeyboardReader(), hero);
-            k2 = new Kunai(_kunai, new KeyboardReader(), hero);
-            k3 = new Kunai(_kunai, new KeyboardReader(), hero);
-            zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
-            damage = new Damage(hero, robot, zombie, k1);
+            
+            
 
-            levelDesigner.loadLevel(1);
+            zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
+            damage = new Damage(hero, robot,  kunai);
+            damage2 = new Damage(hero2,  zombie, kunai);
+
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -189,30 +192,25 @@ namespace GameDev_EindWerk1
 
             switch (state)
             {
-                case GameState.MENU:
-                    break;
-                case GameState.PLAYING:
-                    damage.Update();
-                    hero.Update(gameTime);
-                    k1.EnemyHit = damage.EnemyHit; //sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
-                    robot.Update(gameTime);
+                case GameState.LEVEL1:
+                    levelDesigner.loadLevel(1);
+                    damage2.Update(state);
+                    hero2.Update(gameTime);
                     zombie.Update(gameTime);
-                    k1.Update(gameTime);
-                    k2.Update(gameTime);
-                    k3.Update(gameTime);
+                    kunai.EnemyHit = damage.EnemyHit;
+                    kunai.Update(gameTime);
                     break;
-                case GameState.PAUSED:
-                    break;
-                case GameState.GAME_OVER:
-                    break;
-                case GameState.QUIT:
-                    break;
-                default:
+                case GameState.LEVEL2:
+                    levelDesigner.loadLevel(2);
+                    damage.Update(state);
+                    hero.Update(gameTime);
+                    kunai.EnemyHit = damage.EnemyHit; //sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
+                    robot.Update(gameTime);
+                    kunai.Update(gameTime);
                     break;
             }
 
-            Debug.WriteLine($"hero:{hero.position}\tzombie:{zombie.position}");
-
+           
 
             cursor.Update(gameTime);
             base.Update(gameTime);
@@ -235,17 +233,20 @@ namespace GameDev_EindWerk1
                     quitBttn.Draw(_spriteBatch);
                     break;
 
-                case GameState.PLAYING:
+                case GameState.LEVEL1:
                     playingBackground.Draw(_spriteBatch);
-                    robot.Draw(_spriteBatch);
+                    levelDesigner.Draw(_spriteBatch);
+                    hero2.Draw(_spriteBatch);
                     zombie.Draw(_spriteBatch);
-                    hero.Draw(_spriteBatch);
-                    cursor.Draw(_spriteBatch);
-                    k1.Draw(_spriteBatch);
-                    robot.Draw(_spriteBatch);
-                    cursor.Draw(_spriteBatch);
+                    kunai.Draw(_spriteBatch);
                     break;
-
+                case GameState.LEVEL2:
+                    playingBackground.Draw(_spriteBatch);
+                    levelDesigner.Draw(_spriteBatch);
+                    robot.Draw(_spriteBatch);
+                    hero.Draw(_spriteBatch);
+                    kunai.Draw(_spriteBatch);
+                    break;
                 case GameState.QUIT:
                     Exit();
                     break;

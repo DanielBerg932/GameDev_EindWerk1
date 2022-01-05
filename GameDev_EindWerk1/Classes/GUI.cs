@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using GameDev_EindWerk1.buttons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -36,34 +37,40 @@ namespace GameDev_EindWerk1.Classes
             {
                 //var playTarget = new Rectangle((int)playButton.position.X, (int)playButton.position.Y, playButton.rect.Width, playButton.rect.Height);
                 //var varMouse = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 5, 5);
-                if (new Rectangle((int)playButton.position.X, (int)playButton.position.Y, playButton.rect.Width, playButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 201, 65)) && cursor.mouse.LeftClick())
+                if (new Rectangle((int)playButton.position.X, (int)playButton.position.Y, playButton.rect.Width, playButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 201, 65)) && cursor.mouse.LeftClick() || new Rectangle((int)level1Buttton.position.X, (int)level1Buttton.position.Y, level1Buttton.rect.Width, level1Buttton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 528, 65)) && cursor.mouse.LeftClick())
                 {
-                    currentState = GameState.PLAYING;
+                    currentState = GameState.LEVEL1;
+                }
+                else if (new Rectangle((int)level2Buttton.position.X, (int)level2Buttton.position.Y, level2Buttton.rect.Width, level2Buttton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 537, 65)) && cursor.mouse.LeftClick())
+                {
+
+                    currentState = GameState.LEVEL2;
                 }
                 else if (new Rectangle((int)quitButton.position.X, (int)quitButton.position.Y, quitButton.rect.Width, quitButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 214, 65)) && cursor.mouse.LeftClick())
                 {
                     currentState = GameState.QUIT;
                 }
             }
-            else if (currentState==GameState.PAUSED)
+            else if (currentState == GameState.PAUSED)
             {
                 if (new Rectangle((int)resumeButton.position.X, (int)resumeButton.position.Y, resumeButton.rect.Width, resumeButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 201, 65)) && cursor.mouse.LeftClick())
                 {
-                    currentState = GameState.PLAYING;
+                    currentState = GameState.LEVEL1;
                 }
                 else if (new Rectangle((int)backButton.position.X, (int)backButton.position.Y, backButton.rect.Width, backButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 201, 65)) && cursor.mouse.LeftClick())
                 {
                     currentState = GameState.MENU;
                 }
             }
-            else if (currentState == GameState.PLAYING)
+            else if (currentState == GameState.LEVEL1 || currentState == GameState.LEVEL2)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     currentState = GameState.PAUSED;
                 }
             }
-            //TODO:add level GUI
+
+
 
             return currentState;
         }

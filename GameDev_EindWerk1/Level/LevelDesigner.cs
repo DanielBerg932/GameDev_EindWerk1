@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-
-using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Enums;
 
 
@@ -65,7 +63,7 @@ namespace GameDev_EindWerk1.Level
         {
             obs.level.Clear();
 
-            if (level == 1)
+            if (level == 2)
             {
 
                 /*TOP MID*/
@@ -155,13 +153,103 @@ namespace GameDev_EindWerk1.Level
                 obs.level.Add(new ItemInfo(_tile5, new Rectangle(1575, 825, 75, 75)));
             }
 
-            if (level == 2)
+            if (level == 1)
             {
-                obs.level.Add(new ItemInfo(_tile13, new Rectangle(550, 200, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile14, new Rectangle(625, 200, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile15, new Rectangle(700, 200, 75, 75)));
+                //GROUND 0
+                obs.level.Add(new ItemInfo(_tile12, new Rectangle(0, 825, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(75, 825, 75, 75), ItemType.WATER));//extra water
+                obs.level.Add(new ItemInfo(_tile16, new Rectangle(75, 825, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(150, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(225, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(300, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(375, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(450, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(525, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(600, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(675, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(750, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(825, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(900, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(975, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1050, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1125, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1200, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1275, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1350, 825, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile18, new Rectangle(1425, 825, 75, 75),ItemType.WATER));//extra water
+                obs.level.Add(new ItemInfo(_tile12, new Rectangle(1425, 825, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile9, new Rectangle(1500, 825, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile16, new Rectangle(1575, 825, 75, 75)));
+
+                //level1 
+                obs.level.Add(new ItemInfo(_tile1, new Rectangle(0, 750, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(75, 750, 75, 75),ItemType.WATER));//extra water
+                obs.level.Add(new ItemInfo(_tile3, new Rectangle(75, 750, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(150, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(225, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(300, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(375, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(450, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(525, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(600, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(675, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(750, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(825, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(900, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(975, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1050, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1125, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1200, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1275, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1350, 750, 75, 75), ItemType.WATER));
+                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1425, 750, 75, 75),ItemType.WATER));//extra water
+                obs.level.Add(new ItemInfo(_tile1, new Rectangle(1425, 750, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile2, new Rectangle(1500, 750, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile3, new Rectangle(1575, 750, 75, 75)));
+
+
+                //level 2
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(275,500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(350,500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(425,500, 75, 75)));
+
+                //level 3
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(475, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(550, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(625, 300, 75, 75)));
+
+                //level 4
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(850, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(925, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1000, 300, 75, 75)));
+
+                //level 5
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(1150, 500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(1225, 500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1300, 500, 75, 75)));
+
+                //arrow
+                obs.level.Add(new ItemInfo(_arrow, new Rectangle(1500, 680, 75, 75), ItemType.FINAL));
+
+
             }
 
+
+
+
+
+
+        }
+
+
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var objRect in obs.level)
+            {
+                spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
+            }
         }
     }
+
 }

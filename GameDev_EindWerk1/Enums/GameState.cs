@@ -7,8 +7,9 @@ namespace GameDev_EindWerk1
     public enum GameState
     {
         MENU,
-        PLAYING,
         PAUSED,
+        LEVEL1,
+        LEVEL2,
         GAME_OVER,
         QUIT
     }
