@@ -156,6 +156,7 @@ namespace GameDev_EindWerk1.Classes
                     {
                         xMovement = (int)(xMovement / 1.5);
                         yMovement = (int)(yMovement / 1.5);
+                        HP -= 1;
 
                     }
 
