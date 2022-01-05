@@ -150,7 +150,7 @@ namespace GameDev_EindWerk1.Classes
                         yMovement = 0;
                         jump = false;
                         fall = true;
-                        Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
+                        //Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
                     }
                     else if (item.TileType == ItemType.WATER)
                     {
@@ -212,10 +212,10 @@ namespace GameDev_EindWerk1.Classes
                 }
                 spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow); //bring to class
 
-                foreach (var objRect in obs.level)
-                {
-                    spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
-                }
+                //foreach (var objRect in obs.level)
+                //{
+                //    spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
+                //}
 
             }
            

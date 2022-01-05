@@ -20,7 +20,7 @@ namespace GameDev_EindWerk1.Enemies
             animation.AddFrame(new AnimationFrame(new Rectangle(2084, 0, 521, 576)));
             animation.userMove = new Vector2(1, 1);
 
-            position = new Vector2(500, (float)Math.Round(floor - animation.CurrentFrame.SourceRect.Height * 0.3f, MidpointRounding.ToPositiveInfinity));
+            position = new Vector2(1400,580);
 
         }
         public void Draw(SpriteBatch spriteBatch)
