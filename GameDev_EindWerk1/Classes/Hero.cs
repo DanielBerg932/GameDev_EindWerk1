@@ -126,7 +126,7 @@ namespace GameDev_EindWerk1.Classes
         public void Move(int xMovement, int yMovement)
         {
 
-            foreach (var item in obs.level1) {
+            foreach (var item in obs.level) {
                 //if ((rectPosition.Right + position.X + xMovement >= item.Rect.Left) &&
                 //    (rectPosition.Bottom + position.Y + yMovement >= item.Rect.Top) &&
                 //    (rectPosition.Top + position.Y + yMovement <= item.Rect.Bottom) &&
@@ -196,7 +196,7 @@ namespace GameDev_EindWerk1.Classes
                 }
                 spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow); //bring to class
 
-                foreach (var objRect in obs.level1)
+                foreach (var objRect in obs.level)
                 {
                     spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
                 }
