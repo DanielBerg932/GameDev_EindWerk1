@@ -15,7 +15,7 @@ namespace GameDev_EindWerk1.Classes
         Texture2D texture;
         private SpriteFont font;
         public Animiation animation;
-        public Vector2 position;
+     
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
         private int floor = 820;
@@ -47,7 +47,7 @@ namespace GameDev_EindWerk1.Classes
         Items obs = Items.GetInstance();
 
         public Vector2 position = new Vector2(70, 610);
-        private Rectangle rectPosition = new Rectangle(15, 8, 85, 126);
+        public Rectangle rectPosition = new Rectangle(15, 8, 85, 126);
 
         //public Vector2 Position { get => position; set => position = value; }
 

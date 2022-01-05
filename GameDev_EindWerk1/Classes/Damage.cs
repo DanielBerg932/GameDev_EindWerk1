@@ -31,8 +31,8 @@ namespace GameDev_EindWerk1.Classes
         public void HeroDamage(Hero hero, Enemy robot)
         {
 
-            bool Xhit = hero.Position.X >= robot.Position.X - 100 && hero.Position.X <= robot.Position.X + 100;
-            bool Yhit = hero.Position.Y >= robot.Position.Y - 100 && hero.Position.Y <= robot.Position.Y + 100;
+            bool Xhit = hero.position.X >= robot.Position.X - 100 && hero.position.X <= robot.Position.X + 100;
+            bool Yhit = hero.position.Y >= robot.Position.Y - 100 && hero.position.Y <= robot.Position.Y + 100;
 
             if (Xhit && Yhit && robot.HP > 0)
             {
@@ -46,7 +46,7 @@ namespace GameDev_EindWerk1.Classes
             HeroDamage(hero, enemy);
             EnemyDamage(enemy, kunai);
             HeroDamage(hero, enemy2);
-            //EnemyDamage(enemy2, kunai);
+            EnemyDamage(enemy2, kunai);
             ZombieDamage(enemy2, hero);
         }
 

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameDev_EindWerk1.Level
 {
-    class LevelDesigner
+    public class LevelDesigner
     {
 
         Items obs = Items.GetInstance();
@@ -151,7 +151,9 @@ namespace GameDev_EindWerk1.Level
 
             if (level == 2)
             {
-
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(550, 200, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(625, 200, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(700, 200, 75, 75)));
             }
 
         }
