@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -15,7 +16,6 @@ namespace GameDev_EindWerk1.Classes
         private SpriteFont font;
         public Animiation animation;
         public Vector2 position;
-
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
 
@@ -53,7 +53,7 @@ namespace GameDev_EindWerk1.Classes
 
         public Vector2 Position { get => position; set => position = value; }
 
-        public Hero(Texture2D _texture, IInputReader reader, SpriteFont _font)
+        public Hero(Texture2D _texture, IInputReader reader, Texture2D _kunaiTexture, SpriteFont _font)
         {
             this.texture = _texture;
             font = _font;
@@ -158,6 +158,7 @@ namespace GameDev_EindWerk1.Classes
 
         }
 
+      
         public void Draw(SpriteBatch spriteBatch)
         {
             if (HP == 0)
@@ -180,6 +181,7 @@ namespace GameDev_EindWerk1.Classes
 
 
             }
+           
         }
 
         public override string ToString()
@@ -189,11 +191,12 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
+          
             Move();
             //Debug.WriteLine(animation.frames.Count);
             animation.Update(gameTime);
         }
 
-        
+
     }
 }

@@ -17,12 +17,13 @@ namespace GameDev_EindWerk1.Classes
         private int rCounter;
         private int lCounter;
         private int ECounter;
-        private SpriteFont font;
+        
         bool enemyHit;
-
+        
         public bool EnemyHit { get => enemyHit; set => enemyHit = value; }
+        
 
-        public Kunai(Texture2D _texture, IInputReader reader, Hero _hero, SpriteFont spriteFont)
+        public Kunai(Texture2D _texture, IInputReader reader, Hero _hero)
         {
             animation = new Animiation(reader, 5);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 163, 160)));
@@ -36,9 +37,6 @@ namespace GameDev_EindWerk1.Classes
             ECounter = 0;
             animation.userMove = new Vector2(0, 1);
             hero = _hero;
-            font = spriteFont;
-
-
         }
         public void Update(GameTime gameTime)
         {
@@ -50,8 +48,7 @@ namespace GameDev_EindWerk1.Classes
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            //_spriteBatch.DrawString(font, $"R:{rCounter}  L:{lCounter} E:{ECounter}     {position.ToString()}", new Vector2(1200, 10), Color.Yellow);//bring to class
-
+           
             if (ECounter > 0 && ECounter < 200 && lCounter >= 0 && lCounter < 200 && rCounter >= 0 && rCounter < 200 && !EnemyHit)
             {
                 _spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);

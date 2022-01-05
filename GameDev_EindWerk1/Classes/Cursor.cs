@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameDev_EindWerk1.Classes
 {
-    class Cursor
+    class Cursor:IGameObject
     {
         private Texture2D _texture;
         public Animiation animiation;
