@@ -147,7 +147,7 @@ namespace GameDev_EindWerk1
             kunai = new Kunai(_kunai, new KeyboardReader(), hero, font);
             damage = new Damage(hero, robot, kunai);
 
-            LevelDesigner levelDesigner = new LevelDesigner(1, _tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
+            LevelDesigner levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
 
         }
 
@@ -184,7 +184,7 @@ namespace GameDev_EindWerk1
                     //hero.checkfordamage(robot);
                     damage.Update();
                     hero.Update(gameTime);
-                    kunai.EnemyHit = damage.EnemyHit;//sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
+                    kunai.EnemyHit = damage.EnemyHit; //sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
                     robot.Update(gameTime);
                     kunai.Update(gameTime);
                     break;
@@ -198,12 +198,9 @@ namespace GameDev_EindWerk1
                     break;
             }
 
-
-
             //debug.writeline($"hero {hero.position}\troboy {robot.position}");
 
             cursor.Update(gameTime);
-
             base.Update(gameTime);
 
 
@@ -263,11 +260,6 @@ namespace GameDev_EindWerk1
             redRectangle = new Texture2D(GraphicsDevice, 1, 1);
             redRectangle.SetData(new[] { Color.White });
             _spriteBatch.Draw(redRectangle, , Color.Red);*/
-
-
-
-
-
 
             _spriteBatch.End();
             base.Draw(gameTime);

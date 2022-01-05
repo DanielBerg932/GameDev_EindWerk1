@@ -65,7 +65,7 @@ namespace GameDev_EindWerk1.Classes
 
 
         }
-        public void Move()
+        public void InputManager()
         {
 
             animation.userMove = animation.UserMove(); //start animation
@@ -78,20 +78,20 @@ namespace GameDev_EindWerk1.Classes
             else if (currentPosition == MovePosition.JUMP_RIGHT)
             {
                 jump = true;
-                MoveTo((int)(speed / 1.2), 0);
+                Move((int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.JUMP_LEFT)
             {
                 jump = true;
-                MoveTo(-(int)(speed / 1.2), 0);
+                Move(-(int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.GO_RIGHT)
             {
-                MoveTo(speed, 0);
+                Move(speed, 0);
             }
             else if (currentPosition == MovePosition.GO_LEFT)
             {
-                MoveTo(-speed, 0);
+                Move(-speed, 0);
 
             }
             else if (currentPosition == MovePosition.JUMP && !pressed)
@@ -108,7 +108,7 @@ namespace GameDev_EindWerk1.Classes
             if (jump)
             {
                 inercia -= 0.7;
-                MoveTo(0, -(int)inercia);
+                Move(0, -(int)inercia);
             }
             else 
             {
@@ -118,12 +118,12 @@ namespace GameDev_EindWerk1.Classes
 
             if (fall && !jump)
             {
-                MoveTo(0, 10);
+                Move(0, 10);
             }
             
         }
 
-        public void MoveTo(int xMovement, int yMovement)
+        public void Move(int xMovement, int yMovement)
         {
 
             foreach (var item in obs.obstacleList) {
@@ -211,7 +211,7 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
-            Move();
+            InputManager();
             animation.Update(gameTime);
         }
     }
