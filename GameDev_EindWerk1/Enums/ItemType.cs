@@ -4,10 +4,11 @@ using System.Text;
 
 namespace GameDev_EindWerk1.Enums
 {
-    public enum TileType
+    public enum ItemType
     {
         WALL,
         ENEMY,
-        WATER
+        WATER,
+        FINAL
     }
 }

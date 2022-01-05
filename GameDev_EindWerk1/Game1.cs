@@ -73,6 +73,7 @@ namespace GameDev_EindWerk1
         private Texture2D _tile16;
         private Texture2D _tile17;
         private Texture2D _tile18;
+        private Texture2D _arrow;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -122,6 +123,7 @@ namespace GameDev_EindWerk1
             _tile16 = Content.Load<Texture2D>("16");
             _tile17 = Content.Load<Texture2D>("17");
             _tile18 = Content.Load<Texture2D>("18");
+            _arrow = Content.Load<Texture2D>("arrow");
 
 
             /*obs.obstacleList.Add(new ItemInfo(_tile3, new Rectangle(300, 750, 100, 100)));*/
@@ -150,14 +152,14 @@ namespace GameDev_EindWerk1
             cursor = new Cursor(_cursor, new MouseReader());
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             k1 = new Kunai(_kunai, new KeyboardReader(), hero);
-            levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
-            levelDesigner.loadLevel(1);
-            levelDesigner.loadLevel(2);
+            levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
             k1 = new Kunai(_kunai, new KeyboardReader(), hero);
             k2 = new Kunai(_kunai, new KeyboardReader(), hero);
             k3 = new Kunai(_kunai, new KeyboardReader(), hero);
             zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
             damage = new Damage(hero, robot, zombie, k1);
+
+            levelDesigner.loadLevel(1);
         }
 
         protected override void Update(GameTime gameTime)

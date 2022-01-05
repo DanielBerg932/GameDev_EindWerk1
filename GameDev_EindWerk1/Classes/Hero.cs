@@ -7,6 +7,8 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 
+using GameDev_EindWerk1.Enums;
+
 namespace GameDev_EindWerk1.Classes
 {
     public class Hero : IGameObject
@@ -142,11 +144,21 @@ namespace GameDev_EindWerk1.Classes
 
                 if ((rectPosition.Bottom + position.Y + yMovement >= item.Rectangle.Top) && (rectPosition.Right + position.X + xMovement >= item.Rectangle.Left) && (rectPosition.Left + position.X + xMovement <= item.Rectangle.Right) && (rectPosition.Top + position.Y + yMovement <= item.Rectangle.Bottom)) //TOP
                 {
-                    xMovement = 0;
-                    yMovement = 0;
-                    jump = false;
-                    fall = true;
-                    Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
+                    if (item.TileType == ItemType.WALL)
+                    {
+                        xMovement = 0;
+                        yMovement = 0;
+                        jump = false;
+                        fall = true;
+                        Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
+                    }
+                    else if (item.TileType == ItemType.WATER)
+                    {
+                        xMovement = (int)(xMovement / 1.5);
+                        yMovement = (int)(yMovement / 1.5);
+
+                    }
+
                 }
             }
 
@@ -187,6 +199,7 @@ namespace GameDev_EindWerk1.Classes
             }
             else
             {
+                
 
                 KeyboardState state = Keyboard.GetState();
                 if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
