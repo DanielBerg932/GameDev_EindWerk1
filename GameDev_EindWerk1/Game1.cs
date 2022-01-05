@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
+using GameDev_EindWerk1.Level;
+
 namespace GameDev_EindWerk1
 {
     public class Game1 : Game
@@ -67,7 +69,6 @@ namespace GameDev_EindWerk1
         private Texture2D _tile18;
 
         Items obs = Items.GetInstance();
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -117,63 +118,6 @@ namespace GameDev_EindWerk1
             _tile17 = Content.Load<Texture2D>("17");
             _tile18 = Content.Load<Texture2D>("18");
 
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(0, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(75, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(150, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(225, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(300, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(375, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(450, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(525, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(600, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(675, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(750, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(825, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(900, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(975, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile18, new Rectangle(1050, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile18, new Rectangle(1125, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1200, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1275, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1350, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1425, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1500, 825, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile5, new Rectangle(1575, 825, 75, 75)));
-
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(0, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(75, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(150, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(225, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(300, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(375, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(450, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(525, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(600, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(675, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(750, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(825, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(900, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile3, new Rectangle(975, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile17, new Rectangle(1050, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile17, new Rectangle(1125, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile1, new Rectangle(1200, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(1275, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(1350, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(1425, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(1500, 750, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile2, new Rectangle(1575, 750, 75, 75)));
-
-
-            obs.obstacleList.Add(new ItemInfo(_tile13, new Rectangle(800, 500, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile14, new Rectangle(875, 500, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile14, new Rectangle(950, 500, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile15, new Rectangle(1025, 500, 75, 75)));
-
-            obs.obstacleList.Add(new ItemInfo(_tile13, new Rectangle(525, 350, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile14, new Rectangle(600, 350, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile14, new Rectangle(675, 350, 75, 75)));
-            obs.obstacleList.Add(new ItemInfo(_tile15, new Rectangle(750, 350, 75, 75)));
-
 
             /*obs.obstacleList.Add(new ItemInfo(_tile3, new Rectangle(300, 750, 100, 100)));*/
 
@@ -202,6 +146,8 @@ namespace GameDev_EindWerk1
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero, font);
             damage = new Damage(hero, robot, kunai);
+
+            LevelDesigner levelDesigner = new LevelDesigner(1, _tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
 
         }
 
@@ -285,10 +231,6 @@ namespace GameDev_EindWerk1
                     cursor.Draw(_spriteBatch);
                     kunai.Draw(_spriteBatch);
                     robot.Draw(_spriteBatch);
-                    foreach (var objRect in obs.obstacleList)
-                    {
-                        _spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
-                    }
                     cursor.Draw(_spriteBatch);
                     break;
 

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using GameDev_EindWerk1.Enums;
+
 namespace GameDev_EindWerk1.Classes
 {
     public class ItemInfo

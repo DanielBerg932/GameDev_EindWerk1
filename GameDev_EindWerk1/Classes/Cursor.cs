@@ -15,9 +15,6 @@ namespace GameDev_EindWerk1.Classes
         public Vector2 position;
         public MouseReader mouse = new MouseReader();
 
-
-
-
         public Cursor(Texture2D _texture, IInputReader reader)
         {
             this._texture = _texture;

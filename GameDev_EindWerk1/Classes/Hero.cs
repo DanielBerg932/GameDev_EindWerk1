@@ -20,8 +20,7 @@ namespace GameDev_EindWerk1.Classes
 
         MovePosition currentPosition = MovePosition.STOP;
 
-        private bool fall = false;
-        private double fallSpeed = 10;
+        private bool fall = true;
 
         private bool jump = false;
         private bool pressed = false;
@@ -45,7 +44,7 @@ namespace GameDev_EindWerk1.Classes
 
         Items obs = Items.GetInstance();
 
-        public Vector2 position = new Vector2(200, 400);
+        public Vector2 position = new Vector2(70, 610);
         private Rectangle rectPosition = new Rectangle(15, 8, 85, 126);
 
         //public Vector2 Position { get => position; set => position = value; }
@@ -79,12 +78,12 @@ namespace GameDev_EindWerk1.Classes
             else if (currentPosition == MovePosition.JUMP_RIGHT)
             {
                 jump = true;
-                MoveTo(speed, 0);
+                MoveTo((int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.JUMP_LEFT)
             {
                 jump = true;
-                MoveTo(-speed, 0);
+                MoveTo(-(int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.GO_RIGHT)
             {
@@ -108,18 +107,17 @@ namespace GameDev_EindWerk1.Classes
             //fall back on the floor after jump
             if (jump)
             {
-                inercia -= 0.8;
+                inercia -= 0.7;
                 MoveTo(0, -(int)inercia);
             }
             else 
             {
-                inercia = 22;
+                inercia = 20;
                 pressed = false;
             }
 
             if (fall && !jump)
             {
-                fallSpeed -= 0.8;
                 MoveTo(0, 10);
             }
             
@@ -146,6 +144,7 @@ namespace GameDev_EindWerk1.Classes
                     yMovement = 0;
                     jump = false;
                     fall = true;
+                    Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
                 }
             }
 
@@ -181,7 +180,7 @@ namespace GameDev_EindWerk1.Classes
         {
             if (HP == 0)
             {
-
+                //TODO
             }
             else
             {
@@ -195,8 +194,12 @@ namespace GameDev_EindWerk1.Classes
                 {
                     spriteBatch.Draw(texture, new Vector2(position.X + rectPosition.X, position.Y + rectPosition.Y), animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
                 }
-                spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow);//bring to class
+                spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow); //bring to class
 
+                foreach (var objRect in obs.obstacleList)
+                {
+                    spriteBatch.Draw(objRect.Texture, objRect.Rectangle, Color.White);
+                }
 
             }
         }
