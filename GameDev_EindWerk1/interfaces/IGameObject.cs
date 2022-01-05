@@ -8,8 +8,8 @@ namespace GameDev_EindWerk1.interfaces
 {
     interface IGameObject
     {
+        void Move(){ }
         void Update(GameTime gameTime) { } //optional method for the static game objects
-
         void Draw(SpriteBatch _spriteBatch);
     }
 }

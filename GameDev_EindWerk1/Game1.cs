@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Input;
+using GameDev_EindWerk1.Enemies;
 using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.buttons;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,9 @@ namespace GameDev_EindWerk1
     {
         private GraphicsDeviceManager _graphics;
         private Texture2D _enemy1Runsheet;
+        private Texture2D _enemy2Runsheet;
         private Texture2D _enemy1DeadSheet;
+        private Texture2D _enemy2DeadSheet;
         private SpriteBatch _spriteBatch;
         private Texture2D _level1Background;
         private Texture2D _runTexture;
@@ -40,12 +43,16 @@ namespace GameDev_EindWerk1
         private Background menuBackground;
         private int counter = 0;
         private GUI gui;
-        private Kunai kunai;
+        private Kunai k1;
+        private Kunai k2;
+        private Kunai k3;
         private GameState state;
         private Cursor cursor;
         public Rectangle clientbounds;
         public SpriteFont font;
         public Damage damage;
+        public ZombieEnemy zombie;
+  
 
         private Texture2D _tile0;
         private Texture2D _tile1;
@@ -81,16 +88,17 @@ namespace GameDev_EindWerk1
 
         protected override void LoadContent()
         {
-            _enemy1Runsheet = Content.Load<Texture2D>(@"enemySprites\robot\runsheet");
-            //_enemy1DeadSheet = Content.Load<Texture2D>(@"enemySprites\robot\deadSheet");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _enemy1Runsheet = Content.Load<Texture2D>(@"enemySprites\robot\runsheet");
+            _enemy1DeadSheet = Content.Load<Texture2D>(@"enemysprites\robot\dead");
+            _enemy2Runsheet = Content.Load<Texture2D>(@"enemySprites\dragon\zombieSheet");
+            _enemy2DeadSheet = Content.Load<Texture2D>(@"enemysprites\dragon\dead");
             _playButton = Content.Load<Texture2D>(@"buttons\play_button");
             _resumeButton = Content.Load<Texture2D>(@"buttons\resume");
             _quitButton = Content.Load<Texture2D>(@"buttons\quit");
             _bacbBttn = Content.Load<Texture2D>(@"buttons\backBttn");
             _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
             _mainMenuBG = Content.Load<Texture2D>(@"buttons\plain_bg");
-            //_jumpTexture = Content.Load<Texture2D>("jumpSheet");//added jumping sprite sheet
             _level1Background = Content.Load<Texture2D>("BG");//added background
             _cursor = Content.Load<Texture2D>("rotated_cursor");
             _level1Bttn = Content.Load<Texture2D>(@"buttons\level1");
@@ -137,8 +145,8 @@ namespace GameDev_EindWerk1
             resumeBttn = new Button(_resumeButton, 374, 55, 500, 755);
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
-            hero = new Hero(_runTexture, new KeyboardReader(), font);
-            robot = new RobotEnemy(_enemy1Runsheet/*,_enemy1DeadSheet*/, new KeyboardReader(), font);
+            hero = new Hero(_runTexture, new KeyboardReader(),_kunai, font);
+            robot = new RobotEnemy(_enemy1Runsheet, _enemy1DeadSheet, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero, font);
@@ -146,11 +154,16 @@ namespace GameDev_EindWerk1
 
             LevelDesigner levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18);
             levelDesigner.loadLevel(1);
+            k1 = new Kunai(_kunai, new KeyboardReader(), hero);
+            k2 = new Kunai(_kunai, new KeyboardReader(), hero);
+            k3 = new Kunai(_kunai, new KeyboardReader(), hero);
+            zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
+            damage = new Damage(hero, robot,zombie, k1);
         }
 
         protected override void Update(GameTime gameTime)
         {
-
+            
             state = gui.SetMenu();
             MouseState mState = Mouse.GetState();
 
@@ -178,12 +191,14 @@ namespace GameDev_EindWerk1
                 case GameState.MENU:
                     break;
                 case GameState.PLAYING:
-                    //hero.checkfordamage(robot);
                     damage.Update();
                     hero.Update(gameTime);
                     kunai.EnemyHit = damage.EnemyHit; //sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
                     robot.Update(gameTime);
-                    kunai.Update(gameTime);
+                    zombie.Update(gameTime);
+                    k1.Update(gameTime);
+                    k2.Update(gameTime);
+                    k3.Update(gameTime);
                     break;
                 case GameState.PAUSED:
                     break;
@@ -195,8 +210,9 @@ namespace GameDev_EindWerk1
                     break;
             }
 
-            //debug.writeline($"hero {hero.position}\troboy {robot.position}");
+            Debug.WriteLine($"hero:{hero.position}\tzombie:{zombie.position}");
 
+            
             cursor.Update(gameTime);
             base.Update(gameTime);
 
@@ -221,6 +237,7 @@ namespace GameDev_EindWerk1
                 case GameState.PLAYING:
                     playingBackground.Draw(_spriteBatch);
                     robot.Draw(_spriteBatch);
+                    zombie.Draw(_spriteBatch);
                     hero.Draw(_spriteBatch);
                     cursor.Draw(_spriteBatch);
                     kunai.Draw(_spriteBatch);

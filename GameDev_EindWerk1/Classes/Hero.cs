@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -14,7 +15,8 @@ namespace GameDev_EindWerk1.Classes
         Texture2D texture;
         private SpriteFont font;
         public Animiation animation;
-
+        public Vector2 position;
+        private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
         private int floor = 820;
 
@@ -176,6 +178,7 @@ namespace GameDev_EindWerk1.Classes
 
         }
 
+      
         public void Draw(SpriteBatch spriteBatch)
         {
             if (HP == 0)
@@ -202,6 +205,7 @@ namespace GameDev_EindWerk1.Classes
                 }
 
             }
+           
         }
 
         public override string ToString()

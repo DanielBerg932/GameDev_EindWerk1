@@ -1,28 +1,27 @@
-﻿using GameDev_EindWerk1.interfaces;
-using GameDev_EindWerk1;
+﻿using GameDev_EindWerk1.Classes;
+using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.Enemies
 {
-    public class RobotEnemy : IGameObject
+    public abstract class Enemy
     {
         private Texture2D texture;
-        //private Texture2D deadTexture;
+        private Texture2D deadTexture;
         public Animiation animation;
         private static int speed = 1;
         public Vector2 position;
-        private int floor = 800;
-        private int counter = 62;
-        int counter2;
+        public int floor = 800;
+        public int counter = 62;
+        public int counter2;
         private Vector2 target = new Vector2(speed, 0);
         private MovePosition direction;
 
         private int hP;
-        private SpriteFont font;
+        public SpriteFont font;
 
         public int HP
         {
@@ -41,11 +40,11 @@ namespace GameDev_EindWerk1.Classes
         public Vector2 Position { get => position; set => position = value; }
         public int HP1 { get => hP; set => hP = value; }
 
-        public RobotEnemy(Texture2D _texture, /*Texture2D _deadTexture,*/ IInputReader reader, SpriteFont _font)
+        public Enemy(Texture2D _texture, Texture2D _deadTexture, IInputReader reader, SpriteFont _font)
         {
 
             texture = _texture;
-            //deadTexture = _deadTexture;
+            deadTexture = _deadTexture;
             font = _font;
             animation = new Animiation(reader, 4);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 567, 556)));
@@ -59,13 +58,21 @@ namespace GameDev_EindWerk1.Classes
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, this.ToString(), new Vector2(1700, 10), Color.Yellow);
+            //spriteBatch.DrawString(font, this.ToString(), new Vector2(1700, 10), Color.Yellow);
 
             if (direction == MovePosition.GO_LEFT)
             {
                 if (HP == 0)
                 {
-                    //spriteBatch.Draw(deadTexture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
+                    if (this is ZombieEnemy)
+                    {
+                        spriteBatch.Draw(deadTexture, position, new Rectangle(0, 0, 684, 627), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
+                    }
+                    else
+                    {
+
+                        spriteBatch.Draw(deadTexture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
+                    }
                 }
                 else
                 {
@@ -76,7 +83,15 @@ namespace GameDev_EindWerk1.Classes
             {
                 if (HP == 0)
                 {
-                    //spriteBatch.Draw(deadTexture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                    if (this is ZombieEnemy)
+                    {
+                        spriteBatch.Draw(deadTexture, position, new Rectangle(0, 0, 684, 627), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                    }
+                    else
+                    {
+
+                        spriteBatch.Draw(deadTexture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                    }
                 }
                 else
                 {
@@ -110,12 +125,21 @@ namespace GameDev_EindWerk1.Classes
 
         public void Update(GameTime gameTime)
         {
-            Move();
-
-
-
-            animation.Update(gameTime);
-            
+            if (HP == 0 && counter2 == 0)
+            {
+                counter2++;
+            }
+            if (HP > 0)
+            {
+                Move();
+                animation.Update(gameTime);
+            }
+            if (counter2 > 0 && counter2 < 2)
+            {
+                Move();
+                animation.Update(gameTime);
+                counter2++;
+            }
         }
 
         public override string ToString()
@@ -123,4 +147,6 @@ namespace GameDev_EindWerk1.Classes
             return $" health:  {HP}";
         }
     }
+
 }
+

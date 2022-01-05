@@ -9,7 +9,7 @@ namespace GameDev_EindWerk1
         {
             //test 123
             using (var game = new Game1())
-                game.Run();
+               game.Run();
         }
     }
 }
