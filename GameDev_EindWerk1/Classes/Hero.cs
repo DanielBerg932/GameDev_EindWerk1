@@ -201,11 +201,6 @@ namespace GameDev_EindWerk1.Classes
                 /*rectPosition.Y += yMovement;*/
             }
 
-            if (collison)
-            {
-                xMovement = 0;
-                yMovement = 0;
-            }
         }
 
 
