@@ -45,6 +45,7 @@ namespace GameDev_EindWerk1
         private Button resumeBttn;
         private Background playingBackground;
         private Background menuBackground;
+        private Background gameOverBackground;
         private int counter = 0;
         private GUI gui;
         private Kunai kunai;
@@ -61,6 +62,7 @@ namespace GameDev_EindWerk1
         private Texture2D _tile0;
         private Song song;
         private Texture2D _fireball;
+        private Texture2D _gameOver;
         private Texture2D _tile1;
         private Texture2D _tile2;
         private Texture2D _tile3;
@@ -118,7 +120,7 @@ namespace GameDev_EindWerk1
             effect = Content.Load<SoundEffect>(@"music\jump");
             song= Content.Load<Song>(@"music\Boss Theme");
             _fireball = Content.Load<Texture2D>(@"weapons\fireball");
-
+            _gameOver = Content.Load<Texture2D>("GameOver");
 
             _tile1 = Content.Load<Texture2D>("1");
             _tile2 = Content.Load<Texture2D>("2");
@@ -164,11 +166,12 @@ namespace GameDev_EindWerk1
             resumeBttn = new Button(_resumeButton, 374, 55, 500, 755);
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
+            gameOverBackground = new Background(_gameOver);
             hero = new Hero(_runTexture, _heroDead, new KeyboardReader(), font);
             hero2 = new Hero(_runTexture, _heroDead, new KeyboardReader(), font);
             robot = new RobotEnemy(_enemy1Runsheet, _enemy1DeadSheet, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
-            gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
+            gui = new GUI(cursor,hero,hero2, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero2);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
             fireball = new Fireball(_fireball,new KeyboardReader(),hero);
@@ -187,15 +190,15 @@ namespace GameDev_EindWerk1
             state = gui.SetMenu();
             
             MouseState mState = Mouse.GetState();
-
+            cursor.Update(gameTime);
             #region fullscreen logic
 
             if (Keyboard.GetState().IsKeyDown(Keys.F12))
             {
 
 
-                _graphics.PreferredBackBufferHeight = 1080;
-                _graphics.PreferredBackBufferWidth = 1920;
+                _graphics.PreferredBackBufferHeight = 890;
+                _graphics.PreferredBackBufferWidth = 1600;
 
                 _graphics.ApplyChanges();
             } //pressing F12 to go to fullscreen
@@ -218,11 +221,14 @@ namespace GameDev_EindWerk1
                     fireball.Update(gameTime);
                     damage.Update(hero, robot, fireball, state);
                     break;
+                case GameState.GAME_OVER:
+                    base.Update(gameTime);
+                    break;
             }
 
 
 
-            cursor.Update(gameTime);
+            
             base.Update(gameTime);
 
 
@@ -269,7 +275,9 @@ namespace GameDev_EindWerk1
                     break;
 
                 case GameState.GAME_OVER:
+                    gameOverBackground.Draw(_spriteBatch);
                     cursor.Draw(_spriteBatch);
+                    quitBttn.Draw(_spriteBatch);
                     break;
 
                 default:

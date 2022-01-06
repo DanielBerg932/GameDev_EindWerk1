@@ -87,14 +87,14 @@ namespace GameDev_EindWerk1.Classes
             }
             else if (currentPosition == MovePosition.JUMP_RIGHT)
             {
-                _effect.Play();
+               
                 jump = true;
                 
                 Move((int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.JUMP_LEFT)
             {
-                _effect.Play();
+                
                 jump = true;
                 Move(-(int)(speed / 1.2), 0);
             }

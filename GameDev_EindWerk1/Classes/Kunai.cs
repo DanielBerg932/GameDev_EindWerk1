@@ -10,10 +10,10 @@ namespace GameDev_EindWerk1.Classes
         Texture2D texture;
         public Animiation animation;
         public Vector2 position;
-        private Hero hero;
-        private int rCounter;
-        private int lCounter;
-        private int ECounter;
+        public Hero hero;
+        public int rCounter;
+        public int lCounter;
+        public int ECounter;
 
         bool enemyHit;
         bool enemyHit2;
