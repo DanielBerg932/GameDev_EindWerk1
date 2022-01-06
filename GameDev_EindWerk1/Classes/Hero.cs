@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using GameDev_EindWerk1.Enums;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -15,9 +16,10 @@ namespace GameDev_EindWerk1.Classes
     {
 
         Texture2D texture;
+        private Texture2D deadTexture;
         private SpriteFont font;
         public Animiation animation;
-     
+
         private Vector2 direction = new Vector2(0, 0);
         private int speed = 5;
         private int floor = 820;
@@ -25,6 +27,7 @@ namespace GameDev_EindWerk1.Classes
         MovePosition currentPosition = MovePosition.STOP;
 
         private bool fall = true;
+        public bool collison = true;
 
         private bool jump = false;
         private bool pressed = false;
@@ -43,19 +46,22 @@ namespace GameDev_EindWerk1.Classes
                 {
                     hP = 0;
                 }
+                
             }
         }
 
         Items obs = Items.GetInstance();
 
-        public Vector2 position = new Vector2(70, 610);
+        public Vector2 position = new Vector2(50, 610);
         public Rectangle rectPosition = new Rectangle(15, 8, 85, 126);
+        private SoundEffectInstance insatnce;
 
         //public Vector2 Position { get => position; set => position = value; }
 
-        public Hero(Texture2D _texture, IInputReader reader, SpriteFont _font)
+        public Hero(Texture2D _texture, Texture2D _dead, IInputReader reader, SpriteFont _font)
         {
             this.texture = _texture;
+            deadTexture = _dead;
             font = _font;
             animation = new Animiation(reader, 3);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
@@ -69,9 +75,9 @@ namespace GameDev_EindWerk1.Classes
 
 
         }
-        public void InputManager()
+        public void InputManager(SoundEffect _effect)
         {
-
+            
             animation.userMove = animation.UserMove(); //start animation
             currentPosition = animation.EnumMoved();
 
@@ -81,11 +87,14 @@ namespace GameDev_EindWerk1.Classes
             }
             else if (currentPosition == MovePosition.JUMP_RIGHT)
             {
+                _effect.Play();
                 jump = true;
+                
                 Move((int)(speed / 1.2), 0);
             }
             else if (currentPosition == MovePosition.JUMP_LEFT)
             {
+                _effect.Play();
                 jump = true;
                 Move(-(int)(speed / 1.2), 0);
             }
@@ -100,10 +109,11 @@ namespace GameDev_EindWerk1.Classes
             }
             else if (currentPosition == MovePosition.JUMP && !pressed)
             {
+                _effect.Play();
                 jump = true;
                 pressed = true;
             }
-            else 
+            else
             {
                 currentPosition = MovePosition.STOP;
             }
@@ -111,10 +121,13 @@ namespace GameDev_EindWerk1.Classes
             //fall back on the floor after jump
             if (jump)
             {
+           
+               
+                
                 inercia -= 0.7;
                 Move(0, -(int)inercia);
             }
-            else 
+            else
             {
                 inercia = 20;
                 pressed = false;
@@ -124,13 +137,14 @@ namespace GameDev_EindWerk1.Classes
             {
                 Move(0, 10);
             }
-            
+
         }
 
         public void Move(int xMovement, int yMovement)
         {
 
-            foreach (var item in obs.level) {
+            foreach (var item in obs.level)
+            {
                 //if ((rectPosition.Right + position.X + xMovement >= item.Rect.Left) &&
                 //    (rectPosition.Bottom + position.Y + yMovement >= item.Rect.Top) &&
                 //    (rectPosition.Top + position.Y + yMovement <= item.Rect.Bottom) &&
@@ -150,13 +164,12 @@ namespace GameDev_EindWerk1.Classes
                         yMovement = 0;
                         jump = false;
                         fall = true;
-                        //Debug.WriteLine($"X: {position.X} & Y: {position.Y}");
                     }
                     else if (item.TileType == ItemType.WATER)
                     {
                         xMovement = (int)(xMovement / 1.5);
                         yMovement = (int)(yMovement / 1.5);
-
+                        HP -= 2;
                     }
 
                 }
@@ -188,18 +201,23 @@ namespace GameDev_EindWerk1.Classes
                 /*rectPosition.Y += yMovement;*/
             }
 
+            if (collison)
+            {
+                xMovement = 0;
+                yMovement = 0;
+            }
         }
 
-      
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (HP == 0)
+            if (hP == 0)
             {
-                //TODO
+                spriteBatch.Draw(deadTexture, new Vector2(position.X + rectPosition.X, position.Y + rectPosition.Y), new Rectangle(0, 0, 482, 498), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
             }
             else
             {
-                
+
 
                 KeyboardState state = Keyboard.GetState();
                 if (state.IsKeyDown(Keys.A) || state.IsKeyDown(Keys.Left))
@@ -218,7 +236,7 @@ namespace GameDev_EindWerk1.Classes
                 //}
 
             }
-           
+
         }
 
         public override string ToString()
@@ -226,10 +244,14 @@ namespace GameDev_EindWerk1.Classes
             return $" health:  {HP}";
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime,SoundEffect _effect)
         {
-            InputManager();
-            animation.Update(gameTime);
+            if (HP > 0)
+            {
+
+                InputManager(_effect);
+                animation.Update(gameTime);
+            }
         }
     }
 }

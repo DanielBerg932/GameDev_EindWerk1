@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDev_EindWerk1.interfaces
 {
-    interface IGameObject
+    public interface IGameObject
     {
-        void Move(){ }
+        void Move() { }
         void Update(GameTime gameTime) { } //optional method for the static game objects
         void Draw(SpriteBatch _spriteBatch);
     }

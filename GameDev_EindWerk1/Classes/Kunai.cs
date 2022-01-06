@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GameDev_EindWerk1.interfaces;
+﻿using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,11 +14,14 @@ namespace GameDev_EindWerk1.Classes
         private int rCounter;
         private int lCounter;
         private int ECounter;
-        
+
         bool enemyHit;
-        
+        bool enemyHit2;
+
+
         public bool EnemyHit { get => enemyHit; set => enemyHit = value; }
-        
+        public bool EnemyHit2 { get => enemyHit2; set => enemyHit2 = value; }
+
 
         public Kunai(Texture2D _texture, IInputReader reader, Hero _hero)
         {
@@ -40,19 +40,27 @@ namespace GameDev_EindWerk1.Classes
         }
         public void Update(GameTime gameTime)
         {
+
             Move();
             animation.Update(gameTime);
         }
 
-     
+
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-           
+
             if (ECounter > 0 && ECounter < 200 && lCounter >= 0 && lCounter < 200 && rCounter >= 0 && rCounter < 200 && !EnemyHit)
             {
                 _spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
             }
+            //else if (rCounter%2==0)
+            //{
+            //    _spriteBatch.Draw(texture, position, animation.CurrentFrame.SourceRect, Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+
+            //}
+
+
         }
         public void Move()
         {

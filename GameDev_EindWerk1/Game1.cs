@@ -1,7 +1,6 @@
 ﻿using GameDev_EindWerk1.Classes;
 using GameDev_EindWerk1.Input;
 using GameDev_EindWerk1.Enemies;
-using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.buttons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +8,9 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
 using GameDev_EindWerk1.Level;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+
 
 namespace GameDev_EindWerk1
 {
@@ -22,6 +24,7 @@ namespace GameDev_EindWerk1
         private SpriteBatch _spriteBatch;
         private Texture2D _level1Background;
         private Texture2D _runTexture;
+        private Texture2D _heroDead;
         private Texture2D _playButton;
         private Texture2D _resumeButton;
         private Texture2D _quitButton;
@@ -54,8 +57,8 @@ namespace GameDev_EindWerk1
         private Damage damage2;
         public ZombieEnemy zombie;
         public LevelDesigner levelDesigner;
-
         private Texture2D _tile0;
+        private Song song;
         private Texture2D _tile1;
         private Texture2D _tile2;
         private Texture2D _tile3;
@@ -75,6 +78,10 @@ namespace GameDev_EindWerk1
         private Texture2D _tile17;
         private Texture2D _tile18;
         private Texture2D _arrow;
+        SoundEffect effect;
+        private Song general;
+        private Song levl1Song;
+       
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -100,11 +107,15 @@ namespace GameDev_EindWerk1
             _quitButton = Content.Load<Texture2D>(@"buttons\quit");
             _bacbBttn = Content.Load<Texture2D>(@"buttons\backBttn");
             _runTexture = Content.Load<Texture2D>("runSheet");//added running sprite from sheet
+            _heroDead = Content.Load<Texture2D>("heroDead");//added running sprite from sheet
             _mainMenuBG = Content.Load<Texture2D>(@"buttons\plain_bg");
             _level1Background = Content.Load<Texture2D>("BG");//added background
             _cursor = Content.Load<Texture2D>("rotated_cursor");
             _level1Bttn = Content.Load<Texture2D>(@"buttons\level1");
             _level2Bttn = Content.Load<Texture2D>(@"buttons\level2");
+            effect = Content.Load<SoundEffect>(@"music\jump");
+            song= Content.Load<Song>(@"music\Boss Theme");
+            
 
             _tile1 = Content.Load<Texture2D>("1");
             _tile2 = Content.Load<Texture2D>("2");
@@ -132,8 +143,10 @@ namespace GameDev_EindWerk1
 
             font = Content.Load<SpriteFont>(@"buttons\osaka");
             _kunai = Content.Load<Texture2D>("kunaiSheet");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
             InitializeGameObjects();
-
+            
         }
 
         private void InitializeGameObjects()
@@ -148,44 +161,39 @@ namespace GameDev_EindWerk1
             resumeBttn = new Button(_resumeButton, 374, 55, 500, 755);
             playingBackground = new Background(_level1Background);
             menuBackground = new Background(_mainMenuBG);
-            hero = new Hero(_runTexture, new KeyboardReader(), font);
-            hero2 = new Hero(_runTexture, new KeyboardReader(), font);
+            hero = new Hero(_runTexture, _heroDead, new KeyboardReader(), font);
+            hero2 = new Hero(_runTexture, _heroDead, new KeyboardReader(), font);
             robot = new RobotEnemy(_enemy1Runsheet, _enemy1DeadSheet, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
-            
-            
+             
 
             zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
-            damage = new Damage(hero, robot,  kunai);
-            damage2 = new Damage(hero2,  zombie, kunai);
-
+            damage = new Damage();
+         
             
+
+
+
         }
 
         protected override void Update(GameTime gameTime)
         {
-
             state = gui.SetMenu();
+            
             MouseState mState = Mouse.GetState();
 
             #region fullscreen logic
 
             if (Keyboard.GetState().IsKeyDown(Keys.F12))
             {
-                counter++;
-                if (counter % 2 == 0)
-                {
-                    _graphics.PreferredBackBufferHeight = 1000;
-                    _graphics.PreferredBackBufferWidth = 1080;
-                }
-                else
-                {
-                    _graphics.PreferredBackBufferHeight = 1080;
-                    _graphics.PreferredBackBufferWidth = 1920;
-                }
+
+
+                _graphics.PreferredBackBufferHeight = 1080;
+                _graphics.PreferredBackBufferWidth = 1920;
+
                 _graphics.ApplyChanges();
             } //pressing F12 to go to fullscreen
             #endregion
@@ -194,23 +202,23 @@ namespace GameDev_EindWerk1
             {
                 case GameState.LEVEL1:
                     levelDesigner.loadLevel(1);
-                    damage2.Update(state);
-                    hero2.Update(gameTime);
+                    hero2.Update(gameTime,effect);
                     zombie.Update(gameTime);
                     kunai.EnemyHit = damage.EnemyHit;
                     kunai.Update(gameTime);
+                    damage.Update(hero2,zombie,kunai,state);
                     break;
                 case GameState.LEVEL2:
                     levelDesigner.loadLevel(2);
-                    damage.Update(state);
-                    hero.Update(gameTime);
-                    kunai.EnemyHit = damage.EnemyHit; //sorry, dit ziet er niet goed uit. ik kon geen oplossing vinden zonder een major refactoring.
+                    hero.Update(gameTime,effect);
                     robot.Update(gameTime);
+                    kunai.EnemyHit = damage.EnemyHit;
                     kunai.Update(gameTime);
+                    damage.Update(hero, robot, kunai, state);
                     break;
             }
 
-           
+
 
             cursor.Update(gameTime);
             base.Update(gameTime);
@@ -266,16 +274,6 @@ namespace GameDev_EindWerk1
                     break;
             }
 
-            //Texture2D whiteRectangle;
-            //whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            //whiteRectangle.SetData(new[] { Color.White });
-
-            //_spriteBatch.Draw(whiteRectangle, new Rectangle(215, 408, 87, 120), Color.White);
-
-            /*Texture2D redRectangle;
-            redRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            redRectangle.SetData(new[] { Color.White });
-            _spriteBatch.Draw(redRectangle, , Color.Red);*/
 
             _spriteBatch.End();
             base.Draw(gameTime);

@@ -428,6 +428,18 @@
 /processorParam:TextureFormat=Color
 /build:enemySprites/robot/runsheet.png
 
+#begin heroDead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:heroDead.png
+
 #begin jumpSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -475,6 +487,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:menuBG.png
+
+#begin music/Boss Theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/Boss Theme.mp3
+
+#begin music/Dungeon Theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/Dungeon Theme.mp3
+
+#begin music/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/jump.wav
+
+#begin music/Worldmap Theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/Worldmap Theme.mp3
 
 #begin paused_background.png
 /importer:TextureImporter
