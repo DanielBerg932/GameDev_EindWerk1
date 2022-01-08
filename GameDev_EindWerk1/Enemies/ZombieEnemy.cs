@@ -21,13 +21,9 @@ namespace GameDev_EindWerk1.Enemies
             animation.userMove = new Vector2(1, 1);
 
             position = new Vector2(1400,580);
-
+            base.HP = 500;
         }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            spriteBatch.DrawString(base.font, this.ToString(), new Vector2(1700, 10), Color.Yellow);
-        }
+       
 
     }
 }

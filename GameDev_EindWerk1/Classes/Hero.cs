@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using GameDev_EindWerk1.Enums;
+using Microsoft.Xna.Framework.Audio;
+
 namespace GameDev_EindWerk1.Classes
 {
     public class Hero : IGameObject
@@ -13,6 +16,7 @@ namespace GameDev_EindWerk1.Classes
         MapBoundaries mapBoundaries = new MapBoundaries();
 
         Texture2D texture;
+        private Texture2D deadTexture;
         private SpriteFont font;
         public Animiation animation;
 
@@ -36,9 +40,10 @@ namespace GameDev_EindWerk1.Classes
 
         //public Vector2 Position { get => position; set => position = value; }
 
-        public Hero(Texture2D _texture, IInputReader reader, SpriteFont _font)
+        public Hero(Texture2D _texture, Texture2D _dead, IInputReader reader, SpriteFont _font)
         {
             this.texture = _texture;
+            deadTexture = _dead;
             font = _font;
             animation = new Animiation(reader, 3);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
@@ -53,7 +58,7 @@ namespace GameDev_EindWerk1.Classes
 
         public void Move()
         {
-
+            
             animation.userMove = animation.UserMove(); //start animation
             currentPosition = animation.EnumMoved();
 
@@ -82,9 +87,12 @@ namespace GameDev_EindWerk1.Classes
             }
             else if (currentPosition == MovePosition.JUMP)
             {
+                _effect.Play();
+                jump = true;
+                pressed = true;
                 isJumping = true;
             }
-            else 
+            else
             {
                 currentPosition = MovePosition.STOP;
             }
@@ -95,7 +103,7 @@ namespace GameDev_EindWerk1.Classes
                 inercia -= 0.7;
                 collisionManager.CollisionDetector(this, 0, -(int)inercia);
             }
-            else 
+            else
             {
                 inercia = 20;
             }
@@ -110,9 +118,9 @@ namespace GameDev_EindWerk1.Classes
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (HP == 0)
+            if (hP == 0)
             {
-                //TODO
+                spriteBatch.Draw(deadTexture, new Vector2(position.X + rectPosition.X, position.Y + rectPosition.Y), new Rectangle(0, 0, 482, 498), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.FlipHorizontally, 0f);
             }
             else
             {
@@ -131,7 +139,7 @@ namespace GameDev_EindWerk1.Classes
                 spriteBatch.DrawString(font, this.ToString(), new Vector2(10, 10), Color.Yellow); //bring to class
 
             }
-           
+
         }
 
         public override string ToString()

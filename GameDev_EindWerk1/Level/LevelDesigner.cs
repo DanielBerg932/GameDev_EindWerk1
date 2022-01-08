@@ -202,7 +202,7 @@ namespace GameDev_EindWerk1.Level
                 obs.level.Add(new ItemInfo(_tile17, new Rectangle(1200, 750, 75, 75), ItemType.WATER));
                 obs.level.Add(new ItemInfo(_tile17, new Rectangle(1275, 750, 75, 75), ItemType.WATER));
                 obs.level.Add(new ItemInfo(_tile17, new Rectangle(1350, 750, 75, 75), ItemType.WATER));
-                obs.level.Add(new ItemInfo(_tile17, new Rectangle(1425, 750, 75, 75),ItemType.WATER));//extra water
+                //obs.level.Add(new ItemInfo(_tile17, new Rectangle(1425, 750, 75, 75),ItemType.WATER));//extra water
                 obs.level.Add(new ItemInfo(_tile1, new Rectangle(1425, 750, 75, 75)));
                 obs.level.Add(new ItemInfo(_tile2, new Rectangle(1500, 750, 75, 75)));
                 obs.level.Add(new ItemInfo(_tile3, new Rectangle(1575, 750, 75, 75)));
