@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.interfaces;
-using GameDev_EindWerk1.Classes;
+using GameDev_EindWerk1.hero;
+using GameDev_EindWerk1.animation;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace GameDev_EindWerk1.Enemies
     {
         public ZombieEnemy(Texture2D _texture, Texture2D _deadTexture, IInputReader reader, SpriteFont _font) : base(_texture, _deadTexture, reader, _font)
         {
-            animation = new Animiation(reader, 5);
+            animation = new Animation(reader, 5);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 521, 576)));
             animation.AddFrame(new AnimationFrame(new Rectangle(521, 0, 521, 576)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1042, 0, 521, 576)));

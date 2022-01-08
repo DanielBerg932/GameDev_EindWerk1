@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.interfaces;
-using GameDev_EindWerk1.Classes;
+using GameDev_EindWerk1.hero;
+using GameDev_EindWerk1.animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,7 +11,7 @@ namespace GameDev_EindWerk1.weapons
     public class Kunai : IGameObject
     {
         Texture2D texture;
-        public Animiation animation;
+        public Animation animation;
         public Vector2 position;
         public Hero hero;
         public int rCounter;
@@ -27,7 +28,7 @@ namespace GameDev_EindWerk1.weapons
 
         public Kunai(Texture2D _texture, IInputReader reader, Hero _hero)
         {
-            animation = new Animiation(reader, 5);
+            animation = new Animation(reader, 5);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 163, 160)));
             animation.AddFrame(new AnimationFrame(new Rectangle(163, 0, 163, 160)));
             animation.AddFrame(new AnimationFrame(new Rectangle(326, 0, 163, 160)));

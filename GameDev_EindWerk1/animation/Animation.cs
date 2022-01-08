@@ -7,9 +7,9 @@ using System.Text;
 using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.Input;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.animation
 {
-    public class Animiation
+    public class Animation
     {
 
         public AnimationFrame CurrentFrame;
@@ -20,7 +20,7 @@ namespace GameDev_EindWerk1.Classes
         IInputReader inputReader;
         public int frameCounter;
 
-        public Animiation(IInputReader reader ,int _frameCounter)
+        public Animation(IInputReader reader ,int _frameCounter)
         {
             frames = new List<AnimationFrame>();
             inputReader = reader;

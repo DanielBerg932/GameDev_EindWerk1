@@ -1,12 +1,13 @@
 ﻿using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.Enemies;
 using GameDev_EindWerk1.weapons;
+using GameDev_EindWerk1.hero;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.damage
 {
     public class Damage
     {

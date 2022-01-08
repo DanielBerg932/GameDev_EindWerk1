@@ -1,6 +1,5 @@
 ﻿using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1;
-using GameDev_EindWerk1.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

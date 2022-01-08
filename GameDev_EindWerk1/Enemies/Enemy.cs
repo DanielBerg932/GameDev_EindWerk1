@@ -1,5 +1,6 @@
-﻿using GameDev_EindWerk1.Classes;
+﻿using GameDev_EindWerk1.hero;
 using GameDev_EindWerk1.interfaces;
+using GameDev_EindWerk1.animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,7 +12,7 @@ namespace GameDev_EindWerk1.Enemies
     {
         private Texture2D texture;
         private Texture2D deadTexture;
-        public Animiation animation;
+        public Animation animation;
         private static int speed = 1;
         public Vector2 position;
         public int floor = 800;
@@ -49,7 +50,7 @@ namespace GameDev_EindWerk1.Enemies
             texture = _texture;
             deadTexture = _deadTexture;
             font = _font;
-            animation = new Animiation(reader, 4);
+            animation = new Animation(reader, 4);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 567, 556)));
             animation.AddFrame(new AnimationFrame(new Rectangle(567, 0, 567, 556)));
             animation.AddFrame(new AnimationFrame(new Rectangle(1114, 0, 567, 556)));

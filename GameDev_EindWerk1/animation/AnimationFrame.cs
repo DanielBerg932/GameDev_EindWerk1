@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameDev_EindWerk1
+namespace GameDev_EindWerk1.animation
 {
     public class AnimationFrame
     {

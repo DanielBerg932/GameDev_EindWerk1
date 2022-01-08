@@ -5,7 +5,7 @@ using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.GUI
 {
     class Background : IGameObject
     {

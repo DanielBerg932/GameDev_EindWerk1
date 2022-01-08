@@ -2,12 +2,13 @@
 using System;
 using System.Diagnostics;
 using GameDev_EindWerk1.buttons;
+using GameDev_EindWerk1.hero;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.GUI
 {
-    class GUI
+    class UserInterface
     {
         public GameState currentState;
         private Cursor cursor;
@@ -22,7 +23,7 @@ namespace GameDev_EindWerk1.Classes
         public int counter = 0;
 
 
-        public GUI(Cursor mouse,Hero _hero,Hero _hero2, Button play, Button quit, Button back, Button resume, Button level1, Button level2)
+        public UserInterface(Cursor mouse,Hero _hero,Hero _hero2, Button play, Button quit, Button back, Button resume, Button level1, Button level2)
         {
             cursor = mouse;
             hero = _hero;
@@ -41,8 +42,6 @@ namespace GameDev_EindWerk1.Classes
 
             if (currentState == GameState.MENU||currentState==GameState.GAME_OVER)
             {
-                //var playTarget = new Rectangle((int)playButton.position.X, (int)playButton.position.Y, playButton.rect.Width, playButton.rect.Height);
-                //var varMouse = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 5, 5);
                 if (new Rectangle((int)playButton.position.X, (int)playButton.position.Y, playButton.rect.Width, playButton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 201, 65)) && cursor.mouse.LeftClick() || new Rectangle((int)level1Buttton.position.X, (int)level1Buttton.position.Y, level1Buttton.rect.Width, level1Buttton.rect.Height).Intersects(new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 528, 65)) && cursor.mouse.LeftClick())
                 {
                     currentState = GameState.LEVEL1;

@@ -2,11 +2,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GameDev_EindWerk1.animation;
+using GameDev_EindWerk1.Level;
+using GameDev_EindWerk1.animation;
+using GameDev_EindWerk1.collision;
 
 using GameDev_EindWerk1.Enums;
 using Microsoft.Xna.Framework.Audio;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.hero
 {
     public class Hero : IGameObject
     {
@@ -18,7 +22,7 @@ namespace GameDev_EindWerk1.Classes
         Texture2D texture;
         private Texture2D deadTexture;
         private SpriteFont font;
-        public Animiation animation;
+        public Animation animation;
 
         public Vector2 position = new Vector2(70, 610);
         public Rectangle rectPosition = new Rectangle(12, 5, 80, 125);
@@ -45,7 +49,7 @@ namespace GameDev_EindWerk1.Classes
             this.texture = _texture;
             deadTexture = _dead;
             font = _font;
-            animation = new Animiation(reader, 3);
+            animation = new Animation(reader, 3);
             animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(363, 0, 363, 458)));
             animation.AddFrame(new AnimationFrame(new Rectangle(726, 0, 363, 458)));

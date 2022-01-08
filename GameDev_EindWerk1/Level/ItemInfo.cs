@@ -6,7 +6,7 @@ using System.Text;
 
 using GameDev_EindWerk1.Enums;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.Level
 {
     public class ItemInfo
     {

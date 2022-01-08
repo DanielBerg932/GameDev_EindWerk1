@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-
+using GameDev_EindWerk1.Level;
+using GameDev_EindWerk1.hero;
 using GameDev_EindWerk1.Enums;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.collision
 {
     public class CollisionManager
     {

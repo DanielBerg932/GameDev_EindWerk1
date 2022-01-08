@@ -1,24 +1,25 @@
 ﻿using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.Input;
+using GameDev_EindWerk1.animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.GUI
 {
     class Cursor:IGameObject
     {
         private Texture2D _texture;
-        public Animiation animiation;
+        public Animation animiation;
         public Vector2 position;
         public MouseReader mouse = new MouseReader();
 
         public Cursor(Texture2D _texture, IInputReader reader)
         {
             this._texture = _texture;
-            animiation = new Animiation(reader,1);
+            animiation = new Animation(reader,1);
             animiation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 84, 161)));
             position = reader.ReadInput();
         }

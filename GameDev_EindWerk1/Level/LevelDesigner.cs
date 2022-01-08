@@ -1,4 +1,4 @@
-﻿using GameDev_EindWerk1.Classes;
+﻿using GameDev_EindWerk1.hero;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

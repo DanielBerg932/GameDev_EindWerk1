@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.Level
 {
     class Items
     {

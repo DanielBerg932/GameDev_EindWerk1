@@ -1,4 +1,4 @@
-﻿using GameDev_EindWerk1.Classes;
+﻿using GameDev_EindWerk1.hero;
 using GameDev_EindWerk1.Input;
 using GameDev_EindWerk1.Enemies;
 using GameDev_EindWerk1.buttons;
@@ -11,6 +11,8 @@ using System.Diagnostics;
 using GameDev_EindWerk1.Level;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using GameDev_EindWerk1.damage;
+using GameDev_EindWerk1.GUI;
 
 namespace GameDev_EindWerk1
 {
@@ -47,7 +49,7 @@ namespace GameDev_EindWerk1
         private Background menuBackground;
         private Background gameOverBackground;
         private int counter = 0;
-        private GUI gui;
+        private UserInterface gui;
         private Kunai kunai;
         private Kunai k2;
         private GameState state;
@@ -85,7 +87,6 @@ namespace GameDev_EindWerk1
         private Texture2D _arrow;
         SoundEffect effect;
         private Song levl1Song;
-        private Star star;
        
         public Game1()
         {
@@ -173,11 +174,10 @@ namespace GameDev_EindWerk1
             hero2 = new Hero(_runTexture, _heroDead, new KeyboardReader(), font);
             robot = new RobotEnemy(_enemy1Runsheet, _enemy1DeadSheet, new KeyboardReader(), font);
             cursor = new Cursor(_cursor, new MouseReader());
-            gui = new GUI(cursor,hero,hero2, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
+            gui = new UserInterface(cursor,hero,hero2, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero2);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
             fireball = new Fireball(_fireball,new KeyboardReader(),hero);
-            star = new Star(_star, new KeyboardReader(), hero);
             zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
             damage = new Damage();
          
@@ -218,14 +218,11 @@ namespace GameDev_EindWerk1
                     break;
                 case GameState.LEVEL2:
                     damage.Update(hero, robot, fireball, state);
-                    damage.Update(hero, robot, star, state);
                     levelDesigner.loadLevel(2);
                     hero.Update(gameTime,effect);
                     robot.Update(gameTime);
                     fireball.Update(gameTime);
-                    star.EnemyHit = damage.EnemyHit;
                     fireball.EnemyHit = damage.EnemyHit;
-                    star.Update(gameTime);
                     break;
                 case GameState.GAME_OVER:
                     base.Update(gameTime);
@@ -269,7 +266,6 @@ namespace GameDev_EindWerk1
                     levelDesigner.Draw(_spriteBatch);
                     kunai.Draw(_spriteBatch);
                     fireball.Draw(_spriteBatch);
-                    star.Draw(_spriteBatch);
                     break;
                 case GameState.QUIT:
                     Exit();
