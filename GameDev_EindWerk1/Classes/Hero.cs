@@ -56,7 +56,7 @@ namespace GameDev_EindWerk1.Classes
             //position = new Vector2(200, 400);
         }
 
-        public void Move()
+        public void Move(SoundEffect _effect)
         {
             
             animation.userMove = animation.UserMove(); //start animation
@@ -88,8 +88,6 @@ namespace GameDev_EindWerk1.Classes
             else if (currentPosition == MovePosition.JUMP)
             {
                 _effect.Play();
-                jump = true;
-                pressed = true;
                 isJumping = true;
             }
             else
@@ -147,9 +145,9 @@ namespace GameDev_EindWerk1.Classes
             return $" health:  {HP}";
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime,SoundEffect _effect)
         {
-            Move();
+            Move(_effect);
             animation.Update(gameTime);
         }
     }
