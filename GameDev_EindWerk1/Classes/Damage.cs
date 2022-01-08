@@ -1,5 +1,6 @@
 ﻿using GameDev_EindWerk1.interfaces;
 using GameDev_EindWerk1.Enemies;
+using GameDev_EindWerk1.weapons;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -59,17 +60,18 @@ namespace GameDev_EindWerk1.Classes
         {
             HeroDamage(_hero, _enemy, _state);
             EnemyDamage(_enemy, _kunai, _state);
-            // ZombieDamage(enemy, hero, state);
+            
         }
 
 
         private void EnemyDamage(Enemy _enemy, Kunai _kunai, GameState _state)
         {
+           
+           
             bool xHit = _kunai.position.X >= _enemy.Position.X - 100 && _kunai.position.X <= _enemy.Position.X + 100;
             bool yHit = _kunai.position.Y >= _enemy.Position.Y - 100 && _kunai.position.Y <= _enemy.Position.Y + 100;
             if (xHit && yHit)
             {
-                _enemy.HP = 0;
                 if (_enemy is RobotEnemy)
                 {
 
@@ -80,6 +82,8 @@ namespace GameDev_EindWerk1.Classes
 
                     enemyHit = true;
                 }
+                _enemy.HP -=500;
+                
             }
 
         }

@@ -21,7 +21,7 @@ namespace GameDev_EindWerk1.Enemies
 
         private Vector2 target = new Vector2(speed, 0);
         private MovePosition direction;
-        
+
         private int hP;
         public SpriteFont font;
 
@@ -55,14 +55,18 @@ namespace GameDev_EindWerk1.Enemies
             animation.AddFrame(new AnimationFrame(new Rectangle(1671, 0, 567, 556)));
             animation.userMove = new Vector2(1, 1);
             position = new Vector2(1100, 320);
-            HP = 1000;
+            HP = 10500;
             counter2 = 0;
             counterInit = 0;
-            
+
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.DrawString(font, this.ToString(), new Vector2(1700, 10), Color.Yellow);
+            if (this is RobotEnemy)
+            {
+                spriteBatch.DrawString(font, this.ToString(), new Vector2(1100, 10), Color.Yellow);
+
+            }
 
             if (direction == MovePosition.GO_LEFT)
             {
@@ -106,9 +110,9 @@ namespace GameDev_EindWerk1.Enemies
 
         public void Move()
         {
-            
-          
-            
+
+
+
             if (counter >= 200)
                 counter = 0;
 
@@ -129,7 +133,7 @@ namespace GameDev_EindWerk1.Enemies
             counter++;
         }
 
-        
+
 
         public void Update(GameTime gameTime)
         {

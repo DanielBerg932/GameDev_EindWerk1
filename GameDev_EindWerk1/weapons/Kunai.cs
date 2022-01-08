@@ -1,9 +1,10 @@
 ﻿using GameDev_EindWerk1.interfaces;
+using GameDev_EindWerk1.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameDev_EindWerk1.Classes
+namespace GameDev_EindWerk1.weapons
 {
     public class Kunai : IGameObject
     {

@@ -28,7 +28,7 @@ namespace GameDev_EindWerk1.Classes
 
         private bool fall = true;
         public bool collison = true;
-
+        private SoundEffectInstance p;
         private bool jump = false;
         private bool pressed = false;
         private double inercia = 15;

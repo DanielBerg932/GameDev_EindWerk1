@@ -2,6 +2,7 @@
 using GameDev_EindWerk1.Input;
 using GameDev_EindWerk1.Enemies;
 using GameDev_EindWerk1.buttons;
+using GameDev_EindWerk1.weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,7 +11,6 @@ using System.Diagnostics;
 using GameDev_EindWerk1.Level;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-using GameDev_EindWerk1.weapons;
 
 namespace GameDev_EindWerk1
 {
@@ -62,6 +62,7 @@ namespace GameDev_EindWerk1
         private Texture2D _tile0;
         private Song song;
         private Texture2D _fireball;
+        private Texture2D _star;
         private Texture2D _gameOver;
         private Texture2D _tile1;
         private Texture2D _tile2;
@@ -83,8 +84,8 @@ namespace GameDev_EindWerk1
         private Texture2D _tile18;
         private Texture2D _arrow;
         SoundEffect effect;
-        private Song general;
         private Song levl1Song;
+        private Star star;
        
         public Game1()
         {
@@ -121,6 +122,8 @@ namespace GameDev_EindWerk1
             song= Content.Load<Song>(@"music\Boss Theme");
             _fireball = Content.Load<Texture2D>(@"weapons\fireball");
             _gameOver = Content.Load<Texture2D>("GameOver");
+            _star= Content.Load<Texture2D>(@"weapons\star");
+            
 
             _tile1 = Content.Load<Texture2D>("1");
             _tile2 = Content.Load<Texture2D>("2");
@@ -175,7 +178,7 @@ namespace GameDev_EindWerk1
             kunai = new Kunai(_kunai, new KeyboardReader(), hero2);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
             fireball = new Fireball(_fireball,new KeyboardReader(),hero);
-
+            star = new Star(_star, new KeyboardReader(), hero);
             zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
             damage = new Damage();
          
@@ -207,19 +210,23 @@ namespace GameDev_EindWerk1
             switch (state)
             {
                 case GameState.LEVEL1:
+                    damage.Update(hero2,zombie,kunai,state);
                     levelDesigner.loadLevel(1);
                     hero2.Update(gameTime,effect);
                     zombie.Update(gameTime);
                     kunai.EnemyHit = damage.EnemyHit;
                     kunai.Update(gameTime);
-                    damage.Update(hero2,zombie,kunai,state);
                     break;
                 case GameState.LEVEL2:
+                    damage.Update(hero, robot, fireball, state);
+                    damage.Update(hero, robot, star, state);
                     levelDesigner.loadLevel(2);
                     hero.Update(gameTime,effect);
                     robot.Update(gameTime);
                     fireball.Update(gameTime);
-                    damage.Update(hero, robot, fireball, state);
+                    star.EnemyHit = damage.EnemyHit;
+                    fireball.EnemyHit = damage.EnemyHit;
+                    star.Update(gameTime);
                     break;
                 case GameState.GAME_OVER:
                     base.Update(gameTime);
@@ -262,6 +269,7 @@ namespace GameDev_EindWerk1
                     robot.Draw(_spriteBatch);
                     hero.Draw(_spriteBatch);
                     fireball.Draw(_spriteBatch);
+                    star.Draw(_spriteBatch);
                     break;
                 case GameState.QUIT:
                     Exit();
