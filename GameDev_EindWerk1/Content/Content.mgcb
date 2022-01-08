@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../Sounds/WaterSound.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:../../Sounds/WaterSound.mp3;WaterSound.mp3
+
 #begin _resized.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -252,6 +258,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:arrow.png
+
+#begin BackgroundSound.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundSound.mp3
 
 #begin BG.png
 /importer:TextureImporter
@@ -511,4 +523,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:runSheet.png
+
+#begin ThrowKnife.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ThrowKnife.mp3
 

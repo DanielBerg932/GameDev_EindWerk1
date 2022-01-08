@@ -209,24 +209,24 @@ namespace GameDev_EindWerk1.Level
 
 
                 //level 2
-                obs.level.Add(new ItemInfo(_tile13, new Rectangle(275,500, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile14, new Rectangle(350,500, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile15, new Rectangle(425,500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(200,500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(275,500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(350,500, 75, 75)));
 
                 //level 3
-                obs.level.Add(new ItemInfo(_tile13, new Rectangle(475, 300, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile14, new Rectangle(550, 300, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile15, new Rectangle(625, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(475, 275, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(550, 275, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(625, 275, 75, 75)));
 
                 //level 4
-                obs.level.Add(new ItemInfo(_tile13, new Rectangle(850, 300, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile14, new Rectangle(925, 300, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1000, 300, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(900, 275, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(975, 275, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1050, 275, 75, 75)));
 
                 //level 5
-                obs.level.Add(new ItemInfo(_tile13, new Rectangle(1150, 500, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile14, new Rectangle(1225, 500, 75, 75)));
-                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1300, 500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile13, new Rectangle(1225, 500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile14, new Rectangle(1300, 500, 75, 75)));
+                obs.level.Add(new ItemInfo(_tile15, new Rectangle(1370, 500, 75, 75)));
 
                 //arrow
                 obs.level.Add(new ItemInfo(_arrow, new Rectangle(1500, 680, 75, 75), ItemType.FINAL));

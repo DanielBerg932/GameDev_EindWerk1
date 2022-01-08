@@ -5,6 +5,7 @@ using GameDev_EindWerk1.interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace GameDev_EindWerk1.Classes
 {
@@ -19,7 +20,9 @@ namespace GameDev_EindWerk1.Classes
         private int ECounter;
         
         bool enemyHit;
-        
+
+        SoundManager sounds = SoundManager.GetInstance();
+
         public bool EnemyHit { get => enemyHit; set => enemyHit = value; }
         
 
@@ -68,6 +71,8 @@ namespace GameDev_EindWerk1.Classes
                 position.X += 10;
                 rCounter++;
                 ECounter++;
+                
+                //MediaPlayer.Play(sounds.dictionary["ThrowKnife"]);
             }
             else if (left || (lCounter > 0 && lCounter < 200))
             {

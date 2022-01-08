@@ -40,6 +40,7 @@ namespace GameDev_EindWerk1.Enemies
             }
         }
         public Vector2 Position { get => position; set => position = value; }
+        
         public int HP1 { get => hP; set => hP = value; }
 
         public Enemy(Texture2D _texture, Texture2D _deadTexture, IInputReader reader, SpriteFont _font)

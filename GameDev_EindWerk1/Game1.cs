@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
 using GameDev_EindWerk1.Level;
+using Microsoft.Xna.Framework.Media;
 
 namespace GameDev_EindWerk1
 {
@@ -75,12 +76,17 @@ namespace GameDev_EindWerk1
         private Texture2D _tile17;
         private Texture2D _tile18;
         private Texture2D _arrow;
+
+        SoundManager sounds = SoundManager.GetInstance();
+        Song BackgroundSound;
+        Song WaterSound;
+        Song ThrowKnife;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
-
         }
 
         protected override void Initialize()
@@ -126,12 +132,13 @@ namespace GameDev_EindWerk1
             _tile18 = Content.Load<Texture2D>("18");
             _arrow = Content.Load<Texture2D>("arrow");
 
-
-            /*obs.obstacleList.Add(new ItemInfo(_tile3, new Rectangle(300, 750, 100, 100)));*/
-
-
             font = Content.Load<SpriteFont>(@"buttons\osaka");
             _kunai = Content.Load<Texture2D>("kunaiSheet");
+
+            WaterSound = Content.Load<Song>("WaterSound");
+            BackgroundSound = Content.Load<Song>("BackgroundSound");
+            ThrowKnife = Content.Load<Song>("ThrowKnife");
+
             InitializeGameObjects();
 
         }
@@ -155,14 +162,17 @@ namespace GameDev_EindWerk1
             gui = new GUI(cursor, playBttn, quitBttn, backBtnn, resumeBttn, level1Bttn, level2Bttn);
             kunai = new Kunai(_kunai, new KeyboardReader(), hero);
             levelDesigner = new LevelDesigner(_tile0, _tile1, _tile2, _tile3, _tile4, _tile5, _tile6, _tile7, _tile8, _tile9, _tile10, _tile11, _tile12, _tile13, _tile14, _tile15, _tile16, _tile17, _tile18, _arrow);
-            
-            
 
             zombie = new ZombieEnemy(_enemy2Runsheet, _enemy2DeadSheet, new KeyboardReader(), font);
             damage = new Damage(hero, robot,  kunai);
             damage2 = new Damage(hero2,  zombie, kunai);
 
-            
+            sounds.dictionary.Add("WaterSound", WaterSound);
+            sounds.dictionary.Add("ThrowKnife", ThrowKnife);
+            sounds.dictionary.Add("BackgroundSound", BackgroundSound);
+
+            sounds.StartBackgroundMusic();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -235,16 +245,24 @@ namespace GameDev_EindWerk1
 
                 case GameState.LEVEL1:
                     playingBackground.Draw(_spriteBatch);
-                    levelDesigner.Draw(_spriteBatch);
-                    hero2.Draw(_spriteBatch);
                     zombie.Draw(_spriteBatch);
+                    hero2.Draw(_spriteBatch);
+                    levelDesigner.Draw(_spriteBatch);
                     kunai.Draw(_spriteBatch);
                     break;
                 case GameState.LEVEL2:
+
+                    //Texture2D whiteRectangle;
+                    //whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
+                    //whiteRectangle.SetData(new[] { Color.White });
+                    //_spriteBatch.Draw(whiteRectangle, new Rectangle(hero.rectPosition.Left + hero.rectPosition.X + (int)hero.position.X, hero.rectPosition.Top + hero.rectPosition.Y + (int)hero.position.Y, hero.rectPosition.Right, hero.rectPosition.Bottom), Color.White);
+
+                    //Debug.WriteLine($"DEBUG: {hero.rectPosition.X + (int)hero.position.X}");
+
                     playingBackground.Draw(_spriteBatch);
-                    levelDesigner.Draw(_spriteBatch);
                     robot.Draw(_spriteBatch);
                     hero.Draw(_spriteBatch);
+                    levelDesigner.Draw(_spriteBatch);
                     kunai.Draw(_spriteBatch);
                     break;
                 case GameState.QUIT:
@@ -266,11 +284,7 @@ namespace GameDev_EindWerk1
                     break;
             }
 
-            //Texture2D whiteRectangle;
-            //whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            //whiteRectangle.SetData(new[] { Color.White });
-
-            //_spriteBatch.Draw(whiteRectangle, new Rectangle(215, 408, 87, 120), Color.White);
+            
 
             /*Texture2D redRectangle;
             redRectangle = new Texture2D(GraphicsDevice, 1, 1);
