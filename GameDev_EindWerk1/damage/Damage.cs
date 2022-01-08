@@ -1,26 +1,14 @@
-﻿using GameDev_EindWerk1.interfaces;
-using GameDev_EindWerk1.Enemies;
-using GameDev_EindWerk1.weapons;
+﻿using GameDev_EindWerk1.Enemies;
 using GameDev_EindWerk1.hero;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+using GameDev_EindWerk1.weapons;
 
 namespace GameDev_EindWerk1.damage
 {
     public class Damage
     {
-        public Damage(/*Hero _hero, Enemy _robot, Kunai _kunai*/)
-        {//
-         //    hero = _hero;
-         //    enemy = _robot;
 
-            //    kunai = _kunai;
-        }
         public Hero hero { get; set; }
         public Enemy enemy { get; set; }
-        public List<Kunai> kunais = new List<Kunai>();
 
         public GameState currentState;
         public Kunai kunai { get; set; }
@@ -57,18 +45,10 @@ namespace GameDev_EindWerk1.damage
 
         }
 
-        public void Update(Hero _hero,Enemy _enemy,Kunai _kunai,GameState _state)
-        {
-            HeroDamage(_hero, _enemy, _state);
-            EnemyDamage(_enemy, _kunai, _state);
-            
-        }
-
-
         private void EnemyDamage(Enemy _enemy, Kunai _kunai, GameState _state)
         {
-           
-           
+
+
             bool xHit = _kunai.position.X >= _enemy.Position.X - 100 && _kunai.position.X <= _enemy.Position.X + 100;
             bool yHit = _kunai.position.Y >= _enemy.Position.Y - 100 && _kunai.position.Y <= _enemy.Position.Y + 100;
             if (xHit && yHit)
@@ -83,25 +63,18 @@ namespace GameDev_EindWerk1.damage
 
                     enemyHit = true;
                 }
-                _enemy.HP -=500;
-                
+                _enemy.HP -= 500;
+
             }
 
         }
 
-        //private void ZombieDamage(Enemy enemy, Hero hero, GameState _state)
-        //{
-        //    if (_state == GameState.LEVEL1)
-        //    {
+        public void Update(Hero _hero, Enemy _enemy, Kunai _kunai, GameState _state)
+        {
+            HeroDamage(_hero, _enemy, _state);
+            EnemyDamage(_enemy, _kunai, _state);
 
-        //        bool y = (int)hero.position.Y >= (int)enemy.position.Y && (int)hero.position.Y <= (int)enemy.position.Y - 100;
-        //        bool x = (int)hero.position.X >= (int)enemy.position.X - 20 && (int)hero.position.X <= (int)enemy.position.X + 20;//range is good, havent checked r to l though
-        //        if (x && y)
-        //        {
-        //            enemy.HP = 0;
-        //            enemyHit = true;
-        //        }
-        //    }
-        //}
+        }
+
     }
 }
